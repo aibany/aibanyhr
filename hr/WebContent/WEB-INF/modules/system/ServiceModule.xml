@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+	default-lazy-init="true">  
+  <bean id="securityGroupManageTarget" class="com.aibany.hr.module.system.service.SecurityGroupManageImpl" parent="baseService"> 
+    <property name="sqlNameSpace" value="SecurityGroup8Associates"/>  
+    <property name="tableName" value="security_group"/>  
+    <property name="tabIdAndTableNameMapping"> 
+      <map> 
+        <entry key="SecurityUser"> 
+          <value>security_user</value> 
+        </entry> 
+      </map> 
+    </property>  
+    <property name="tabIdAndColFieldMapping"> 
+      <map> 
+        <entry key="SecurityUser"> 
+          <value>GRP_ID</value> 
+        </entry> 
+      </map> 
+    </property>  
+    <property name="tabIdAndTableModeMapping"> 
+      <map> 
+        <entry key="SecurityUser"> 
+          <value>Many2ManyAndRel</value> 
+        </entry> 
+      </map> 
+    </property> 
+  </bean>  
+  <bean id="securityGroupManageService" parent="transactionBase"> 
+    <property name="target" ref="securityGroupManageTarget"/> 
+  </bean>  
+  <bean id="securityRoleTreeManageTarget" class="com.aibany.hr.module.system.service.SecurityRoleTreeManageImpl" parent="baseService"> 
+    <property name="sqlNameSpace" value="SecurityRole"/>  
+    <property name="tableName" value="security_role"/>  
+    <property name="uniqueField" value="ROLE_CODE"/> 
+  </bean>  
+  <bean id="securityRoleTreeManageService" parent="transactionBase"> 
+    <property name="target" ref="securityRoleTreeManageTarget"/> 
+  </bean>  
+  <bean id="securityUserQueryTarget" class="com.aibany.hr.module.system.service.SecurityUserQueryImpl" parent="baseService"> 
+    <property name="sqlNameSpace" value="SecurityUserQuery"/> 
+  </bean>  
+  <bean id="securityUserQueryService" parent="transactionBase"> 
+    <property name="target" ref="securityUserQueryTarget"/> 
+  </bean>  
+  <bean id="securityGroupTreeSelectTarget" class="com.aibany.hr.module.system.service.SecurityGroupTreeSelectImpl" parent="baseService"> 
+    <property name="sqlNameSpace" value="SecurityGroupTreeSelect"/> 
+  </bean>  
+  <bean id="securityGroupTreeSelectService" parent="transactionBase"> 
+    <property name="target" ref="securityGroupTreeSelectTarget"/> 
+  </bean>  
+  <bean id="securityGroupQueryTarget" class="com.aibany.hr.module.system.service.SecurityGroupQueryImpl" parent="baseService"> 
+    <property name="sqlNameSpace" value="SecurityGroupQuery"/> 
+  </bean>  
+  <bean id="securityGroupQueryService" parent="transactionBase"> 
+    <property name="target" ref="securityGroupQueryTarget"/> 
+  </bean>  
+  <bean id="securityUserTreeSelectTarget" class="com.aibany.hr.module.system.service.SecurityUserTreeSelectImpl" parent="baseService"> 
+    <property name="sqlNameSpace" value="SecurityUserTreeSelect"/> 
+  </bean>  
+  <bean id="securityUserTreeSelectService" parent="transactionBase"> 
+    <property name="target" ref="securityUserTreeSelectTarget"/> 
+  </bean>  
+  <bean id="securityRoleTreeSelectTarget" class="com.aibany.hr.module.system.service.SecurityRoleTreeSelectImpl" parent="baseService"> 
+    <property name="sqlNameSpace" value="SecurityRoleTreeSelect"/> 
+  </bean>  
+  <bean id="securityRoleTreeSelectService" parent="transactionBase"> 
+    <property name="target" ref="securityRoleTreeSelectTarget"/> 
+  </bean>  
+  <bean id="wcmGeneralGroup8ContentManageTarget" class="com.aibany.hr.module.system.service.WcmGeneralGroup8ContentManageImpl" parent="baseService"> 
+    <property name="sqlNameSpace" value="WcmGeneralGroup8Associates"/>  
+    <property name="tableName" value="wcm_general_group"/>  
+    <property name="tabIdAndTableNameMapping"> 
+      <map> 
+        <entry key="WcmGeneralResource"> 
+          <value>wcm_general_resource</value> 
+        </entry> 
+      </map> 
+    </property>  
+    <property name="tabIdAndColFieldMapping"> 
+      <map> 
+        <entry key="WcmGeneralResource"> 
+          <value>GRP_ID</value> 
+        </entry> 
+      </map> 
+    </property>  
+    <property name="tabIdAndTableModeMapping"> 
+      <map> 
+        <entry key="WcmGeneralResource"> 
+          <value>One2Many</value> 
+        </entry> 
+      </map> 
+    </property> 
+  </bean>  
+  <bean id="wcmGeneralGroup8ContentManageService" parent="transactionBase"> 
+    <property name="target" ref="wcmGeneralGroup8ContentManageTarget"/> 
+  </bean>  
+  <bean id="systemLogQueryTarget" class="com.aibany.hr.module.system.service.SystemLogQueryImpl" parent="baseService"> 
+    <property name="sqlNameSpace" value="syslog"/> 
+  </bean>  
+  <bean id="systemLogQuery" parent="transactionBase"> 
+    <property name="target" ref="systemLogQueryTarget"/> 
+  </bean>
+  <bean id="handlerManageTarget" class="com.aibany.hr.module.system.service.HandlerManageImpl" parent="baseService"> 
+    <property name="sqlNameSpace" value="syshandler"/>  
+    <property name="tableName" value="sys_handler"/>  
+    <property name="subTableIdNameMapping"> 
+      <map> 
+        <entry key="SysOperation"> 
+          <value>sys_operation</value> 
+        </entry> 
+      </map> 
+    </property>  
+    <property name="subTableIdSortFieldMapping"> 
+      <map> 
+        <entry key="SysOperation"> 
+          <value>OPER_SORT</value> 
+        </entry> 
+      </map> 
+    </property> 
+  </bean>  
+  <bean id="handlerManageService" parent="transactionBase"> 
+    <property name="target" ref="handlerManageTarget"/> 
+  </bean>     
+</beans>

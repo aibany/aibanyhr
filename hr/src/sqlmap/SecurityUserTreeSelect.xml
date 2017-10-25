@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SecurityUserTreeSelect"> 
+	<select id="queryPickTreeRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		SELECT a.USER_ID,a.USER_NAME, a.USER_SORT,b.GRP_ID FROM security_user a 
+		left Join security_user_group_rel b ON a.USER_ID = b.USER_ID 
+		where 1=1
+	    <isNotEmpty prepend=" AND " property="groupId">
+		b.GRP_ID = #groupId#
+		</isNotEmpty>
+		order by a.USER_SORT,a.USER_CODE
+	</select>
+	
+	<select id="findChildGroupRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		SELECT a.GRP_ID,a.GRP_NAME 
+		FROM security_group a 
+		where 1=1
+	    <isNotEmpty prepend=" AND " property="parentId">
+		a.GRP_PID = #parentId#
+		</isNotEmpty>
+		order by a.GRP_SORT
+	</select>
+</sqlMap>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="SecurityRole">  
+  <select id="queryTreeRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select ROLE_ID,ROLE_CODE,ROLE_NAME,ROLE_PID,ROLE_DESC,ROLE_STATE,ROLE_SORT
+from security_role order by ROLE_PID,ROLE_SORT
+  </select>
+  <select id="queryCurLevelRecords" parameterClass="String" resultClass="com.agileai.domain.DataRow">
+    select b.ROLE_ID,b.ROLE_CODE,b.ROLE_NAME,b.ROLE_PID,b.ROLE_DESC,b.ROLE_STATE,b.ROLE_SORT
+from security_role a left join security_role b 
+on a.ROLE_PID=b.ROLE_PID
+where a.ROLE_ID=#value#
+order by b.ROLE_SORT
+  </select>
+  <select id="queryChildRecords" parameterClass="String" resultClass="com.agileai.domain.DataRow">
+    select ROLE_ID,ROLE_CODE,ROLE_NAME,ROLE_PID,ROLE_DESC,ROLE_STATE,ROLE_SORT
+from security_role where ROLE_PID = #value# order by ROLE_SORT
+  </select>  
+  <select id="queryTreeRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+    select ROLE_ID,ROLE_CODE,ROLE_NAME,ROLE_PID,ROLE_DESC,ROLE_STATE,ROLE_SORT
+from security_role
+where 1=1 
+<isNotEmpty prepend="and " property="ROLE_ID">
+ROLE_ID=#ROLE_ID#
+</isNotEmpty>
+<isNotEmpty prepend="and " property="ROLE_CODE">
+ROLE_CODE=#ROLE_CODE#
+</isNotEmpty>
+  </select>
+  <select id="queryMaxSortId" parameterClass="String" resultClass="com.agileai.domain.DataRow">
+    select max(ROLE_SORT) as MAX_ROLE_SORT from security_role where ROLE_PID = #value#
+  </select>     
+  <insert id="insertTreeRecord" parameterClass="com.agileai.domain.DataParam">
+    insert into security_role (ROLE_ID,ROLE_CODE,ROLE_NAME,ROLE_PID,ROLE_DESC,ROLE_STATE,ROLE_SORT) values (#CHILD_ROLE_ID#,#CHILD_ROLE_CODE#,#CHILD_ROLE_NAME#,#CHILD_ROLE_PID#,#CHILD_ROLE_DESC#,#CHILD_ROLE_STATE#,#CHILD_ROLE_SORT#)
+  </insert>
+  <update id="updateTreeRecord" parameterClass="com.agileai.domain.DataParam">
+    update security_role
+set ROLE_CODE=#ROLE_CODE#,ROLE_NAME=#ROLE_NAME#,ROLE_PID=#ROLE_PID#,ROLE_DESC=#ROLE_DESC#,ROLE_STATE=#ROLE_STATE#,ROLE_SORT=#ROLE_SORT#
+where ROLE_ID=#ROLE_ID#
+  </update>
+  <delete id="deleteTreeRecord" parameterClass="String">
+    delete from security_role where ROLE_ID = #value#
+  </delete>
+</sqlMap>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd" default-lazy-init="true">
+  <bean id="deptTreeSelectTarget" class="com.aibany.hr.module.information.service.DeptTreeSelectImpl" parent="baseService"> 
+    <property name="sqlNameSpace" value="DeptTreeSelect"/> 
+  </bean>  
+  <bean id="deptTreeSelectService" parent="transactionBase"> 
+    <property name="target" ref="deptTreeSelectTarget"/> 
+  </bean>
+    <bean id="hrEmployeeManageTarget" class="com.aibany.hr.module.information.service.HrEmployeeManageImpl" parent="baseService"> 
+    <property name="sqlNameSpace" value="hremployee"/>  
+    <property name="tableName" value="hr_employee"/>  
+    <property name="subTableIdNameMapping"> 
+      <map> 
+        <entry key="HrEducation"> 
+          <value>hr_education</value> 
+        </entry>  
+        <entry key="HrExperience"> 
+          <value>hr_experience</value> 
+        </entry>  
+        <entry key="HrWorkPerformance"> 
+          <value>hr_work_performance</value> 
+        </entry> 
+      </map> 
+    </property>  
+    <property name="subTableIdSortFieldMapping"> 
+      <map> 
+        <entry key="HrEducation"> 
+          <value/> 
+        </entry>  
+        <entry key="HrExperience"> 
+          <value/> 
+        </entry>  
+        <entry key="HrWorkPerformance"> 
+          <value/> 
+        </entry> 
+      </map> 
+    </property> 
+  </bean>  
+  <bean id="hrEmployeeManageService" parent="transactionBase"> 
+    <property name="target" ref="hrEmployeeManageTarget"/> 
+  </bean>  
+</beans>

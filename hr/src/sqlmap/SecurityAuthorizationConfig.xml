@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="SecurityAuthorizationConfig"> 
+  <select id="retrieveRoleList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	SELECT b.ROLE_ID,b.ROLE_CODE,b.ROLE_NAME
+	FROM security_role_auth a
+	Inner Join security_role b 
+	ON b.ROLE_ID = a.ROLE_ID
+	where 1=1
+	and a.RES_TYPE = #resourceType#
+	and a.RES_ID = #resourceId#
+	ORDER BY ROLE_NAME
+  </select>
+  <insert id="addRoleAuthRelation" parameterClass="com.agileai.domain.DataParam">
+    insert into security_role_auth (ROLE_AUTH_ID,ROLE_ID,RES_TYPE,RES_ID)
+    select '$ROLE_AUTH_ID$','$ROLE_ID$','$RES_TYPE$','$RES_ID$' from dual 
+    where NOT EXISTS (select * from security_role_auth where ROLE_ID = '$ROLE_ID$' and RES_TYPE='$RES_TYPE$' and RES_ID='$RES_ID$')
+  </insert>
+  <delete id="delRoleAuthRelation" parameterClass="com.agileai.domain.DataParam">
+    delete from security_role_auth where 1=1
+    <isNotEmpty prepend=" AND " property="RES_TYPE">RES_TYPE = #RES_TYPE#</isNotEmpty>
+    <isNotEmpty prepend=" AND " property="RES_ID">RES_ID = #RES_ID#</isNotEmpty>
+    <isNotEmpty prepend=" AND " property="ROLE_ID">ROLE_ID = #ROLE_ID#</isNotEmpty>
+  </delete>      
+  <select id="retrieveUserList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	SELECT b.USER_ID,b.USER_CODE,b.USER_NAME
+	FROM security_user_auth a
+	Inner Join security_user b 
+	ON b.USER_ID = a.USER_ID
+	where 1=1
+	and a.RES_TYPE = #resourceType#
+	and a.RES_ID = #resourceId#
+	ORDER BY USER_NAME
+  </select>
+  <insert id="addUserAuthRelation" parameterClass="com.agileai.domain.DataParam">
+    insert into security_user_auth (USER_AUTH_ID,USER_ID,RES_TYPE,RES_ID) 
+    select '$USER_AUTH_ID$','$USER_ID$','$RES_TYPE$','$RES_ID$' from dual
+    where NOT EXISTS (select * from security_user_auth where USER_ID = '$USER_ID$' and RES_TYPE='$RES_TYPE$' and RES_ID='$RES_ID$')
+  </insert>
+  <delete id="delUserAuthRelation" parameterClass="com.agileai.domain.DataParam">
+    delete from security_user_auth where  1=1
+    <isNotEmpty prepend=" AND " property="RES_TYPE">RES_TYPE = #RES_TYPE#</isNotEmpty>
+    <isNotEmpty prepend=" AND " property="RES_ID">RES_ID = #RES_ID#</isNotEmpty>
+    <isNotEmpty prepend=" AND " property="USER_ID">USER_ID = #USER_ID#</isNotEmpty>
+  </delete>   
+  <select id="retrieveGroupList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	SELECT b.GRP_ID,b.GRP_CODE,b.GRP_NAME
+	FROM security_group_auth a
+	Inner Join security_group b 
+	ON b.GRP_ID = a.GRP_ID
+	where 1=1
+	and a.RES_TYPE = #resourceType#
+	and a.RES_ID = #resourceId#
+	ORDER BY GRP_NAME
+  </select>
+  <insert id="addGroupAuthRelation" parameterClass="com.agileai.domain.DataParam">
+    insert into security_group_auth (GRP_AUTH_ID,GRP_ID,RES_TYPE,RES_ID) 
+    select '$GRP_AUTH_ID$','$GRP_ID$','$RES_TYPE$','$RES_ID$' from dual
+    where NOT EXISTS (select * from security_group_auth where GRP_ID = '$GRP_ID$' and RES_TYPE='$RES_TYPE$' and RES_ID='$RES_ID$')
+  </insert>
+  <delete id="delGroupAuthRelation" parameterClass="com.agileai.domain.DataParam">
+    delete from security_group_auth where  1=1
+    <isNotEmpty prepend=" AND " property="RES_TYPE">RES_TYPE = #RES_TYPE#</isNotEmpty>
+    <isNotEmpty prepend=" AND " property="RES_ID">RES_ID = #RES_ID#</isNotEmpty> 
+    <isNotEmpty prepend=" AND " property="GRP_ID">GRP_ID = #GRP_ID#</isNotEmpty>
+  </delete>  
+  
+  <select id="getSecurityUserRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select USER_ID,USER_CODE,USER_NAME,USER_PWD,USER_SEX,USER_DESC,USER_STATE,USER_SORT
+	from security_user
+	where 1=1 
+	<isNotEmpty prepend="and " property="USER_CODE">
+	USER_CODE=#USER_CODE#
+	</isNotEmpty>
+	<isNotEmpty prepend="and " property="USER_STATE">
+	USER_STATE=#USER_STATE#
+	</isNotEmpty>
+  </select> 
+  <select id="retrieveRoleRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	SELECT a.ROLE_ID, a.ROLE_CODE,a.ROLE_NAME,b.USER_ID
+	FROM security_role a
+	Inner Join security_user_role_rel b 
+	ON a.ROLE_ID = b.ROLE_ID
+	where b.USER_ID = #userId#
+	and a.ROLE_STATE = 1
+  </select> 
+  <select id="retrieveGroupRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	SELECT a.GRP_ID,a.GRP_CODE,a.GRP_NAME,b.USER_ID
+	FROM security_group a Inner Join security_user_group_rel b 
+	ON a.GRP_ID = b.GRP_ID
+	where b.USER_ID = #userId#
+	and a.GRP_STATE = 1
+  </select>
+  <select id="retrieveMenuIdList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select DISTINCT aa.FUNC_ID,aa.FUNC_NAME
+	from 
+	(
+	SELECT nav.FUNC_ID,	nav.FUNC_NAME
+	FROM sys_function nav Inner Join security_user_auth uauth 
+	ON nav.FUNC_ID = uauth.RES_ID
+	INNER join security_user u
+	ON uauth.USER_ID = u.USER_ID
+	where 1=1
+	and uauth.RES_TYPE = 'Menu'
+	and uauth.USER_ID = #userId#
+	and u.USER_STATE =1
+	UNION
+	SELECT nav.FUNC_ID,nav.FUNC_NAME
+	FROM sys_function nav Inner Join security_role_auth rauth 
+	ON nav.FUNC_ID = rauth.RES_ID
+	inner join security_role r
+	on rauth.ROLE_ID = r.ROLE_ID
+	inner join security_user_role_rel ur
+	on r.ROLE_ID = ur.ROLE_ID
+	inner join security_user u
+	on ur.USER_ID = u.USER_ID
+	where 1=1
+	and rauth.RES_TYPE = 'Menu'
+	and ur.USER_ID = #userId#
+	and u.USER_STATE = 1
+	and r.ROLE_STATE = 1
+	UNION
+	SELECT nav.FUNC_ID,	nav.FUNC_NAME
+	FROM sys_function nav Inner Join security_group_auth rauth 
+	ON nav.FUNC_ID = rauth.RES_ID
+	inner join security_group g
+	on rauth.GRP_ID = g.GRP_ID
+	inner join security_user_group_rel ug
+	on g.GRP_ID = ug.GRP_ID
+	inner join security_user u
+	on ug.USER_ID = u.USER_ID
+	where 1=1
+	and rauth.RES_TYPE = 'Menu'
+	and ug.USER_ID = #userId#
+	and u.USER_STATE = 1
+	and g.GRP_STATE = 1
+	) aa
+  </select>
+  
+  <select id="retrieveHandlerIdList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select DISTINCT aa.HANLER_ID,aa.HANLER_CODE
+	from 
+	(
+	SELECT nav.HANLER_ID,	nav.HANLER_CODE
+	FROM sys_handler nav Inner Join security_user_auth uauth 
+	ON nav.HANLER_ID = uauth.RES_ID
+	INNER join security_user u
+	ON uauth.USER_ID = u.USER_ID
+	where 1=1
+	and uauth.RES_TYPE = 'Handler'
+	and uauth.USER_ID = #userId#
+	and u.USER_STATE =1
+	UNION
+	SELECT nav.HANLER_ID,nav.HANLER_CODE
+	FROM sys_handler nav Inner Join security_role_auth rauth 
+	ON nav.HANLER_ID = rauth.RES_ID
+	inner join security_role r
+	on rauth.ROLE_ID = r.ROLE_ID
+	inner join security_user_role_rel ur
+	on r.ROLE_ID = ur.ROLE_ID
+	inner join security_user u
+	on ur.USER_ID = u.USER_ID
+	where 1=1
+	and rauth.RES_TYPE = 'Handler'
+	and ur.USER_ID = #userId#
+	and u.USER_STATE = 1
+	and r.ROLE_STATE = 1
+	UNION
+	SELECT nav.HANLER_ID,	nav.HANLER_CODE
+	FROM sys_handler nav Inner Join security_group_auth rauth 
+	ON nav.HANLER_ID = rauth.RES_ID
+	inner join security_group g
+	on rauth.GRP_ID = g.GRP_ID
+	inner join security_user_group_rel ug
+	on g.GRP_ID = ug.GRP_ID
+	inner join security_user u
+	on ug.USER_ID = u.USER_ID
+	where 1=1
+	and rauth.RES_TYPE = 'Handler'
+	and ug.USER_ID = #userId#
+	and u.USER_STATE = 1
+	and g.GRP_STATE = 1
+	) aa
+  </select>
+  
+  
+    <select id="retrieveOperationIdList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select DISTINCT aa.OPER_ID,aa.OPER_NAME
+	from 
+	(
+	SELECT nav.OPER_ID,	nav.OPER_NAME
+	FROM sys_operation nav Inner Join security_user_auth uauth 
+	ON nav.OPER_ID = uauth.RES_ID
+	INNER join security_user u
+	ON uauth.USER_ID = u.USER_ID
+	where 1=1
+	and uauth.RES_TYPE = 'Operation'
+	and uauth.USER_ID = #userId#
+	and u.USER_STATE =1
+	UNION
+	SELECT nav.OPER_ID,nav.OPER_NAME
+	FROM sys_operation nav Inner Join security_role_auth rauth 
+	ON nav.OPER_ID = rauth.RES_ID
+	inner join security_role r
+	on rauth.ROLE_ID = r.ROLE_ID
+	inner join security_user_role_rel ur
+	on r.ROLE_ID = ur.ROLE_ID
+	inner join security_user u
+	on ur.USER_ID = u.USER_ID
+	where 1=1
+	and rauth.RES_TYPE = 'Operation'
+	and ur.USER_ID = #userId#
+	and u.USER_STATE = 1
+	and r.ROLE_STATE = 1
+	UNION
+	SELECT nav.OPER_ID,	nav.OPER_NAME
+	FROM sys_operation nav Inner Join security_group_auth rauth 
+	ON nav.OPER_ID = rauth.RES_ID
+	inner join security_group g
+	on rauth.GRP_ID = g.GRP_ID
+	inner join security_user_group_rel ug
+	on g.GRP_ID = ug.GRP_ID
+	inner join security_user u
+	on ug.USER_ID = u.USER_ID
+	where 1=1
+	and rauth.RES_TYPE = 'Operation'
+	and ug.USER_ID = #userId#
+	and u.USER_STATE = 1
+	and g.GRP_STATE = 1
+	) aa
+  </select>  
+</sqlMap>

@@ -1,0 +1,34 @@
+@charset "utf-8";
+/* CSS Document */
+
+table.CM_table {
+	font-size: 9pt;
+	cursor: default;
+	margin: 0;
+	color:#FFF;
+	background-color: #336699;
+}
+table.CM_table tr {
+	height: 20;
+	font-size: 9pt;
+}
+tr.CM_tr_over {
+	background-color: #66aadd;
+	cursor: default;
+}
+tr.CMTR_tr_out {
+	background-color: #336699;
+	cursor: default;
+}
+div.CM_div {
+	position: absolute;
+	filter: alpha(Opacity='95');
+	display: none;
+	border: 2px outset #3377aa;
+	background-color: #336699;
+	width:0;
+	height:0;
+}
+hr.CM_sperator {
+	border: 1px inset #3377aa;
+}

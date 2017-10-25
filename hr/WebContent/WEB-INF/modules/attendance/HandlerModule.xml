@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans> 
+  <bean id="HrAttendanceManageList" class="com.aibany.hr.module.attendance.handler.HrAttendanceManageListHandler" page="attendance/HrAttendanceManageList.jsp"/>  
+  <bean id="HrAttendanceManageEdit" class="com.aibany.hr.module.attendance.handler.HrAttendanceManageEditHandler" page="attendance/HrAttendanceManageEdit.jsp"/>
+  <bean id="MobileAttendanceStat" class="com.aibany.hr.module.attendance.handler.MobileAttendanceStatHandler" page=""/>
+  <bean id="MobileAttendance" class="com.aibany.hr.module.attendance.handler.MobileAttendanceHandler" page=""/>
+  <bean id="WxSignOne" class="com.aibany.weixin.service.WxSignOneHandler" page="weixin/WxSignOne.jsp"/>  
+</beans>

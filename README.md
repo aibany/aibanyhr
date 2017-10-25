@@ -25,7 +25,7 @@
 
 ### 四、项目开发环境
 
-此项目基于eclipse + tomcat8.0.38 + mysql开发，开发、运行环境比较宽松。
+此项目基于eclipse + tomcat8.0.38 + mysql开发，开发、运行环境比较宽松。也可以用idea。
 
 可以通过下载我们的[release版本](https://img.aibany.com:8090/release/)， 
 ```
@@ -43,7 +43,7 @@
 
 ### 五，项目部署
 
-1, 创建数据库，数据库连接密码需为123456，其他密码需联系我支付一定的费用(请见谅)
+1, 创建数据库
 
 ```
 CREATE DATABASE IF NOT EXISTS aeaihr DEFAULT CHARSET utf8 COLLATE utf8_general_ci;

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="syslog">
+  <select id="queryRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+  	select * from (
+	select ID,OPER_TIME,IP_ADDTRESS,USER_ID,USER_NAME,
+	FUNC_NAME,ACTION_TYPE 
+	from SYS_LOG 
+	where OPER_TIME &gt;= #OPER_STIME# 
+	and OPER_TIME &lt;= #OPER_ETIME#
+	<isNotEmpty prepend="AND" property="IP_ADDTRESS">
+	IP_ADDTRESS like '%$IP_ADDTRESS$%'
+	</isNotEmpty>
+	<isNotEmpty prepend="AND" property="USER_ID">
+	USER_ID like '%$USER_ID$%'
+	</isNotEmpty>
+	<isNotEmpty prepend="AND" property="FUNC_NAME">
+	FUNC_NAME like '%$FUNC_NAME$%'
+	</isNotEmpty>
+	<isNotEmpty prepend="AND" property="ACTION_TYPE">
+	ACTION_TYPE = #ACTION_TYPE#
+	</isNotEmpty>
+	<isNotEmpty prepend="AND" property="userId">
+	USER_ID = #userId#
+	</isNotEmpty>	
+	) aa limit $_startNum_$,$_stepRange_$
+  </select>
+  <select id="queryRecordsCount" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select count(*) as TOTAL_COUNT from ( 
+		select ID,OPER_TIME,IP_ADDTRESS,USER_ID,USER_NAME,
+		FUNC_NAME,ACTION_TYPE 
+		from SYS_LOG 
+		where OPER_TIME &gt;= #OPER_STIME# 
+		and OPER_TIME &lt;= #OPER_ETIME#
+		<isNotEmpty prepend="AND" property="IP_ADDTRESS">
+		IP_ADDTRESS like '%$IP_ADDTRESS$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="USER_ID">
+		USER_ID like '%$USER_ID$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="FUNC_NAME">
+		FUNC_NAME like '%$FUNC_NAME$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ACTION_TYPE">
+		ACTION_TYPE = #ACTION_TYPE#
+		</isNotEmpty>
+	) aa
+  </select>  
+  <select id="findDetail" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select ID,OPER_TIME,IP_ADDTRESS,USER_ID,USER_NAME,
+	FUNC_NAME,ACTION_TYPE 
+	from SYS_LOG 
+	where ID = #ID#
+  </select>  
+  <insert id="insertRecord" parameterClass="com.agileai.domain.DataParam">
+    insert into SYS_LOG (ID,OPER_TIME,IP_ADDTRESS,USER_ID,USER_NAME,FUNC_NAME,ACTION_TYPE) 
+    values (#ID#,#OPER_TIME#,#IP_ADDTRESS#,#USER_ID#,#USER_NAME#,#FUNC_NAME#,#ACTION_TYPE#)
+  </insert>
+</sqlMap>

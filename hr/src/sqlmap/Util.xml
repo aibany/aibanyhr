@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="util">
+  <select id="getCodeList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select code_id as "id",code_name as "value"
+	from sys_codelist
+	where type_id = '$TYPE_ID$'
+	order by code_sort
+  </select>
+  <select id="getCodeType" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select type_id as "id",type_name as "value"
+	from sys_codetype
+	where 1=1
+	<isNotEmpty prepend="AND" property="TYPE_GROUP">
+	TYPE_GROUP = #TYPE_GROUP#
+	</isNotEmpty>
+	<isNotEmpty prepend="AND" property="TYPE_ID">
+	TYPE_ID = #TYPE_ID#
+	</isNotEmpty>	
+	<isNotEmpty prepend="AND" property="IS_EDITABLE">
+	IS_EDITABLE = #IS_EDITABLE#
+	</isNotEmpty>
+	<isNotEmpty prepend="AND" property="IS_UNITEADMIN">
+	IS_UNITEADMIN = #IS_UNITEADMIN#
+	</isNotEmpty>			
+	order by type_id
+  </select> 
+</sqlMap>

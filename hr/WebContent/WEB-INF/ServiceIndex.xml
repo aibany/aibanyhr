@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Services> 
+  <bean id="propertyConfigurer" module=""/>  
+  <bean id="dataSource" module=""/>  
+  <bean id="appConfig" module=""/>  
+  <bean id="sqlMapClient" module=""/>  
+  <bean id="transactionManager" module=""/>  
+  <bean id="daoHelper" module=""/>  
+  <bean id="transactionBase" module=""/>  
+  <bean id="baseService" module=""/>  
+  <bean id="suService" module=""/>  
+  <bean id="codeListService" module=""/>  
+  <bean id="codeTypeService" module=""/>  
+  <bean id="formSelectFactory" module=""/>  
+  <bean id="sysLogService" module=""/>  
+  <bean id="onlineCounterService" module=""/>  
+  <bean id="securityAuthorizationConfigService" module=""/>  
+  <bean id="functionTreeManageService" module=""/>  
+  <bean id="securityGroupManageService" module="system"/>  
+  <bean id="securityRoleTreeManageService" module="system"/>  
+  <bean id="securityUserQueryService" module="system"/>  
+  <bean id="securityGroupTreeSelectService" module="system"/>  
+  <bean id="securityGroupQueryService" module="system"/>  
+  <bean id="securityUserTreeSelectService" module="system"/>  
+  <bean id="securityRoleTreeSelectService" module="system"/>  
+  <bean id="wcmGeneralGroup8ContentManageService" module="system"/>  
+  <bean id="groupTreeSelectService" module="system"/>  
+  <bean id="systemLogQuery" module="system"/>  
+  <bean id="handlerManageService" module="system"/>  
+  <bean id="hrAttendanceManageService" module="attendance"/>  
+  <bean id="deptTreeSelectService" module="information"/>  
+  <bean id="hrEmployeeManageService" module="information"/>  
+  <bean id="hrLeaveManageService" module="leave"/>  
+  <bean id="hrSalaryManageService" module="salary"/>  
+  <bean id="hrWorkOvertimeManageService" module="workovertime"/>  
+  <bean id="userListSelectService" module="workovertime"/>  
+  <bean id="hrLocationManageService" module="location"/>
+  <bean id="hrSalRecordManageService" module="salrecord"/>
+  <bean id="hrLeaveRecordManageService" module="leaverecord"/>
+</Services>

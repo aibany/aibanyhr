@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">  
+  <bean id="propertyConfigurer" class="com.agileai.hotweb.common.PropertyPlaceholderConfigurerExt"> 
+    <property name="locations"> 
+      <list> 
+        <value>classpath:hotweb.properties</value> 
+      </list> 
+    </property> 
+  </bean>  
+  <bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource"> 
+    <property name="driver"> 
+      <value>${dataSource.driverClassName}</value> 
+    </property>  
+    <property name="driverUrl"> 
+      <value>${dataSource.url}</value> 
+    </property>  
+    <property name="user" value="${dataSource.username}"/>  
+    <property name="password" value="${dataSource.password}"/>  
+    <property name="alias" value="aeaihr"/>  
+    <property name="maximumConnectionCount" value="50"/>  
+    <property name="minimumConnectionCount" value="2"/> 
+  </bean>  
+	<bean id="appConfig" class="com.agileai.hotweb.config.AppConfigFactoryBean"> 
+	   <property name="configFile" value="ConfigContext.xml"></property> 
+	</bean> 
+	<bean id="sqlMapClient"
+		class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocations"
+			value="classpath*:SqlMap*.xml" />
+	</bean>
+  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
+    <property name="dataSource" ref="dataSource"/> 
+  </bean>  
+  <bean id="daoHelper" class="com.agileai.hotweb.common.DaoHelper"> 
+    <property name="dataSource" ref="dataSource"/>  
+    <property name="sqlMapClient" ref="sqlMapClient"/> 
+  </bean>  
+  <bean id="transactionBase" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" lazy-init="true" abstract="true"> 
+    <property name="transactionManager"> 
+      <ref bean="transactionManager"/> 
+    </property>  
+    <property name="transactionAttributes"> 
+      <props> 
+        <prop key="query*">PROPAGATION_REQUIRED,readOnly</prop>  
+        <prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>  
+        <prop key="load*">PROPAGATION_REQUIRED,readOnly</prop>  
+        <prop key="fetch*">PROPAGATION_REQUIRED,readOnly</prop>  
+        <prop key="*">PROPAGATION_REQUIRED</prop> 
+      </props> 
+    </property> 
+  </bean>  
+  <bean id="baseService" class="com.agileai.hotweb.bizmoduler.core.BaseService"> 
+    <property name="daoHelper" ref="daoHelper"/> 
+  </bean>  
+  <bean id="suServiceTarget" class="com.agileai.hotweb.bizmoduler.core.StandardServiceImpl" parent="baseService"/>  
+  <bean id="suService" parent="transactionBase"> 
+    <property name="target" ref="suServiceTarget"/> 
+  </bean>  
+  <bean id="codeListTarget" class="com.agileai.hotweb.bizmoduler.core.StandardServiceImpl" parent="baseService"> 
+    <property name="tableName" value="sys_codelist"/>  
+    <property name="sqlNameSpace" value="codelist"/> 
+  </bean>  
+  <bean id="codeListService" parent="transactionBase"> 
+    <property name="target" ref="codeListTarget"/> 
+  </bean>  
+  <bean id="codeTypeTarget" class="com.agileai.hotweb.bizmoduler.core.StandardServiceImpl" parent="baseService"> 
+    <property name="tableName" value="sys_codetype"/>  
+    <property name="sqlNameSpace" value="codetype"/> 
+  </bean>  
+  <bean id="codeTypeService" parent="transactionBase"> 
+    <property name="target" ref="codeTypeTarget"/> 
+  </bean>  
+  <bean id="formSelectFactory" class="com.agileai.hotweb.domain.FormSelectFactory"> 
+    <property name="daoHelper" ref="daoHelper"/> 
+  </bean>  
+  <bean id="sysLogTarget" class="com.agileai.hotweb.bizmoduler.core.SystemLogServiceImpl" parent="baseService"> 
+    <property name="sqlNameSpace" value="syslog"/> 
+  </bean>  
+  <bean id="sysLogService" parent="transactionBase"> 
+    <property name="target" ref="sysLogTarget"/> 
+  </bean>  
+  <bean id="onlineCounterTarget" class="com.agileai.hotweb.bizmoduler.frame.OnlineCounterServiceImpl" parent="baseService"> 
+    <property name="sqlNameSpace" value="onlinecount"/> 
+  </bean>  
+  <bean id="onlineCounterService" parent="transactionBase"> 
+    <property name="target" ref="onlineCounterTarget"/> 
+  </bean>
+  <bean id="functionTreeManageTarget" class="com.aibany.hr.cxmodule.FunctionTreeManageImpl" parent="baseService"> 
+    <property name="sqlNameSpace" value="SysFunction"/>  
+    <property name="tableName" value="sys_function"/> 
+  </bean>  
+  <bean id="functionTreeManageService" parent="transactionBase"> 
+    <property name="target" ref="functionTreeManageTarget"/> 
+  </bean>
+  <bean id="securityAuthorizationConfigTarget" class="com.aibany.hr.cxmodule.SecurityAuthorizationConfigImpl" parent="baseService"> 
+    <property name="sqlNameSpace" value="SecurityAuthorizationConfig"/> 
+  </bean>  
+  <bean id="securityAuthorizationConfigService" parent="transactionBase"> 
+    <property name="target" ref="securityAuthorizationConfigTarget"/> 
+  </bean>
+</beans>
+

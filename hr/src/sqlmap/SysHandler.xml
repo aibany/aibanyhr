@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="syshandler">  
+  <select id="findMasterRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select HANLER_ID,HANLER_CODE,HANLER_TYPE,HANLER_URL,FUNC_ID
+	from sys_handler where 1=1
+    <isNotEmpty prepend=" " property="funcId">
+	and FUNC_ID = #funcId#
+	</isNotEmpty>
+  </select>
+  <select id="getMasterRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+    select HANLER_ID,HANLER_CODE,HANLER_TYPE,HANLER_URL,FUNC_ID
+	from sys_handler
+	where HANLER_ID=#HANLER_ID#
+  </select>
+  <insert id="insertMasterRecord" parameterClass="com.agileai.domain.DataParam">
+    insert into sys_handler (HANLER_ID,HANLER_CODE,HANLER_TYPE,HANLER_URL,FUNC_ID) values (#HANLER_ID#,#HANLER_CODE#,#HANLER_TYPE#,#HANLER_URL#,#FUNC_ID#)
+  </insert>
+  <update id="updateMasterRecord" parameterClass="com.agileai.domain.DataParam">
+    update sys_handler
+	set HANLER_CODE=#HANLER_CODE#,HANLER_TYPE=#HANLER_TYPE#,HANLER_URL=#HANLER_URL#,FUNC_ID=#FUNC_ID#
+	where HANLER_ID=#HANLER_ID#
+  </update>
+  <delete id="deleteMasterRecord" parameterClass="com.agileai.domain.DataParam">
+    delete from sys_handler where HANLER_ID=#HANLER_ID#
+  </delete>
+   <select id="findSysOperationRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+    select OPER_ID,HANLER_ID,OPER_CODE,OPER_NAME,OPER_ACTIONTPYE,OPER_SORT
+	from sys_operation
+	where 1=1
+	<isNotEmpty prepend=" " property="HANLER_ID">
+	and HANLER_ID=#HANLER_ID#
+	</isNotEmpty>
+	order by OPER_SORT
+   </select>
+   <delete id="deleteSysOperationRecords" parameterClass="com.agileai.domain.DataParam">
+    delete from sys_operation
+	where HANLER_ID=#HANLER_ID#
+   </delete>    
+   <delete id="deleteSysOperationRecord" parameterClass="com.agileai.domain.DataParam">
+   delete from sys_operation where OPER_ID=#OPER_ID#
+   </delete>  
+   <insert id="insertSysOperationRecord" parameterClass="com.agileai.domain.DataParam">
+   insert into sys_operation (OPER_ID,HANLER_ID,OPER_CODE,OPER_NAME,OPER_ACTIONTPYE,OPER_SORT) values (#OPER_ID#,#HANLER_ID#,#OPER_CODE#,#OPER_NAME#,#OPER_ACTIONTPYE#,#OPER_SORT#)
+   </insert>
+   <update id="updateSysOperationRecord" parameterClass="com.agileai.domain.DataParam">
+    update sys_operation
+	set HANLER_ID=#HANLER_ID#,OPER_CODE=#OPER_CODE#,OPER_NAME=#OPER_NAME#,OPER_ACTIONTPYE=#OPER_ACTIONTPYE#,OPER_SORT=#OPER_SORT#
+	where OPER_ID=#OPER_ID#
+   </update> 
+  <select id="retrieveHanlerIdList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+    select HANLER_ID
+	from sys_handler
+	where FUNC_ID=#funcId#
+  </select>   
+  
+  <select id="retrieveUserIdList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+  	select USER_ID 
+	from security_user_auth
+	where RES_ID=#funcId#
+  </select>  
+  
+  <select id="retrieveRoleIdList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+  	select ROLE_ID 
+	from security_role_auth
+	where RES_ID=#funcId#
+  </select>  
+  
+  <select id="retrieveGroupIdList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+  	select GRP_ID 
+	from security_group_auth
+	where RES_ID=#funcId#
+  </select>          
+</sqlMap>

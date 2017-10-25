@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans> 
+  <bean id="HrLocationManageList" class="com.aibany.hr.module.location.handler.HrLocationManageListHandler" page="location/HrLocationManageList.jsp"/>
+</beans>

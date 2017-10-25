@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:simple="http://cxf.apache.org/simple"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+http://cxf.apache.org/simple http://cxf.apache.org/schemas/simple.xsd">
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-extension-jms.xml" />	
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+	<jaxws:server id="HelloWorld" serviceClass="com.aibany.hr.service.demo.HelloWorld"
+		address="/HelloWorld">
+		<jaxws:serviceBean>
+			<bean class="com.aibany.hr.service.demo.HelloWorldImpl">
+			</bean>
+		</jaxws:serviceBean>
+	</jaxws:server>
+</beans>

@@ -1,0 +1,37 @@
+.TreeNode{
+	margin:0 auto;
+	padding:0 auto;
+	vertical-align:middle;	
+}
+.TreeNode img { 
+	border:0px;
+	margin:0 auto;	
+}
+.TreeNode a{
+	vertical-align:middle;
+}
+.TreeNode a span { 
+	font:12px Arial ËÎÌו;
+	margin-left:3px;
+	padding:0;
+	height:17;
+	cursor:default
+}
+.TreeNode .selected { 
+	color:#FFFFFF;
+	text-decoration:none
+}
+.TreeNode .selected span{ 
+	background-color:#3366cc;
+}
+input.TreeNodecheckbox{
+	vertical-align:middle;
+	/*
+	margin:auto;
+	border:none;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size:24px;
+	*/
+	background-color:#DBFBF7;
+	color: #000000;	
+}

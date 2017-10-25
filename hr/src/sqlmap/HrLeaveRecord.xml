@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="HrLeaveRecord">
+	<select id="findRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select EMP_CODE,EMP_NAME,EMP_JOB,LEAVE_RESON,OP_TIME,IN_TIME,OP_NAME
+		from hr_leave_record
+		where 1=1
+		<isNotEmpty prepend=" " property="sdate">
+			and OP_TIME &gt;= date_format(#sdate#,'%Y-%m-%d 00:00:00')
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="edate">
+			and OP_TIME &lt;= date_format(#edate#,'%Y-%m-%d 23:59:59')
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="userName">
+			and EMP_NAME like #userName# or EMP_CODE like #userName#
+		</isNotEmpty>
+		order by OP_TIME desc
+	</select>
+	<insert id="insertRecords" parameterClass="com.agileai.domain.DataParam">
+		insert into hr_leave_record
+		(REC_ID,EMP_CODE,EMP_NAME,EMP_JOB,LEAVE_RESON,OP_TIME,IN_TIME,OP_NAME)
+		values
+		<iterate property="list" conjunction=",">
+			(
+			#list[].REC_ID:VARHCAR#,
+			#list[].EMP_CODE:VARHCAR#,
+			#list[].EMP_NAME:VARHCAR#,
+			#list[].EMP_JOB:VARHCAR#,
+			#list[].LEAVE_RESON:VARHCAR#,
+			#list[].OP_TIME:TIMESTAMP#,
+			#list[].IN_TIME:TIMESTAMP#,
+			#list[].OP_NAME:VARHCAR#
+			)
+		</iterate>
+	</insert>
+</sqlMap>

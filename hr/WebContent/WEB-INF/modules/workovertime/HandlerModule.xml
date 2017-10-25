@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans> 
+  <bean id="HrWorkOvertimeManageList" class="com.aibany.hr.module.workovertime.handler.HrWorkOvertimeManageListHandler" page="workovertime/HrWorkOvertimeManageList.jsp"/>  
+  <bean id="HrWorkOvertimeManageEdit" class="com.aibany.hr.module.workovertime.handler.HrWorkOvertimeManageEditHandler" page="workovertime/HrWorkOvertimeManageEdit.jsp"/>
+  <bean id="UserListSelectList" class="com.aibany.hr.module.workovertime.handler.UserListSelectListHandler" page="workovertime/UserListSelectList.jsp"/>
+  <bean id="MobileOvertime" class="com.aibany.hr.module.workovertime.handler.MobileOvertimeHandler" page=""/>
+</beans>

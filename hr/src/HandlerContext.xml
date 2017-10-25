@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans> 
+  <bean id="Homepage" class="com.agileai.hotweb.controller.core.SimpleHandler" page="frame/Homepage.jsp"/>  
+  <bean id="MenuTree" class="com.aibany.hr.controller.MenuTreeHandler" page="frame/MenuTree.jsp"/>  
+  <bean id="Navigater" class="com.aibany.hr.controller.NavigaterHandler" page="frame/Navigater.jsp"/>  
+  <bean id="Login" class="com.aibany.hr.controller.LoginHandler" page="frame/Login.jsp"/>  
+  <bean id="MainWin" class="com.agileai.hotweb.controller.core.SimpleHandler" page="frame/MainWin.jsp"/>  
+  <bean id="Bottom" class="com.agileai.hotweb.controller.core.SimpleHandler" page="frame/Bottom.jsp"/>  
+  <bean id="Logo" class="com.agileai.hotweb.controller.core.SimpleHandler" page="frame/Logo.jsp"/>  
+  <bean id="Building" class="com.agileai.hotweb.controller.core.SimpleHandler" page="frame/Building.jsp"/>  
+  <bean id="CodeTypeManageList" class="com.agileai.hotweb.controller.frame.CodeTypeManageListHandler" page="frame/CodeTypeManageList.jsp"/>  
+  <bean id="CodeTypeManageEdit" class="com.agileai.hotweb.controller.frame.CodeTypeManageEditHandler" page="frame/CodeTypeManageEdit.jsp"/>  
+  <bean id="CodeListManageList" class="com.agileai.hotweb.controller.frame.CodeListManageListHandler" page="frame/CodeListManageList.jsp"/>  
+  <bean id="CodeListManageEdit" class="com.agileai.hotweb.controller.frame.CodeListManageEditHandler" page="frame/CodeListManageEdit.jsp"/>  
+  <bean id="MenuDataProvider" class="com.aibany.hr.controller.MenuDataProviderHandler" page=""/>
+  <bean id="ModuleCycle" class="com.agileai.hotweb.controller.core.ModuleCycleHandler" page=""/>
+  
+  <!-- 微信 -->
+  <bean id="WxSignIn" class="com.aibany.weixin.service.WxSignInHandler" page="weixin/WxSignIn.jsp"/>  
+  <bean id="WxSignOut" class="com.aibany.weixin.service.WxSignOutHandler" page="weixin/WxSignOut.jsp"/>
+  <bean id="WxBind" class="com.aibany.weixin.service.WxBindHandler" page="weixin/WxBind.jsp"/>
+  <bean id="Notice" class="com.aibany.weixin.service.NoticeHandler" page="weixin/Notice.jsp"/>
+   <bean id="CurrentLocation" class="com.aibany.weixin.service.CurrentLocationHandler" page="webtool/CurrentLocation.jsp"/>  
+  <bean id="ServicePanel" class="com.aibany.weixin.service.ServicePanelHandler" page="webtool/ServicePanel.jsp"/>  
+  <bean id="WeatherForecast" class="com.aibany.weixin.service.WeatherForecastHandler" page="webtool/WeatherForecast.jsp"/>  
+  <bean id="HotMovie" class="com.aibany.weixin.service.HotMovieHandler" page="webtool/HotMovie.jsp"/>  
+  <bean id="AroundSearch" class="com.aibany.weixin.service.AroundSearchHandler" page="webtool/AroundSearch.jsp"/>
+  
+</beans>

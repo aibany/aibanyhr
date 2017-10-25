@@ -1,0 +1,80 @@
+.bOver {
+  font-family: Verdana;
+  font-size: 10px;
+  font-weight: bold;
+  color: white;
+
+  padding-top: 3px;
+  padding-left: 5px;
+  padding-bottom: 3px;
+  padding-right: 5px;
+
+  background-color: #99ccff;
+
+  cursor: hand;
+}
+
+.bOut {
+  font-family: Verdana;
+  font-size: 10px;
+  font-weight: bold;
+  color: white;
+  
+  padding-top: 3px;
+  padding-left: 5px;
+  padding-bottom: 3px;
+  padding-right: 5px;
+  
+  background-color: #5389bc;
+  
+  cursor: hand;
+
+  td {
+	font-size: 9pt;
+}
+.font11 {
+	font-size: 10pt;
+}
+.font12 {
+	font-size: 10.5pt;
+}
+.font10 {
+	font-size: 10.5pt;line-height: 150%;
+}
+.line11 {
+	line-height: 140%;
+}
+INPUT.buttonface {
+	BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid;FONT-SIZE: 9pt; BORDER-LEFT: #000000 1px solid; COLOR: #000000; BORDER-BOTTOM: #000000 1px solid;HEIGHT: 17px; }
+
+a:link {text-decoration: none; color: #000000;}
+a:visited {text-decoration: none; color: #000000;}
+a:active {text-decoration: none;color:#ff3333;}
+a:hover {text-decoration: underline; color: #ff3333;}
+
+.whitenav:link {text-decoration: none; color: #ffffff;}
+.whitenav:visited {text-decoration: none; color: #ffffff;}
+.whitenav:active {text-decoration: none;color:#ffffff;}
+.whitenav:hover {text-decoration: none; color: #ffffff;}
+
+.blacknav:link {text-decoration: none; color: #000000;}
+.blacknav:visited {text-decoration: none; color: #000000;}
+.blacknav:active {text-decoration: none;color:#ff3333;}
+.blacknav:hover {text-decoration: underline; color: #ff3333;}
+
+.titlelink:link {text-decoration: none; color: #000000;}
+.titlelink:visited {text-decoration: none; color: #000000;}
+.titlelink:active {text-decoration: none;color:#ff3333;}
+.titlelink:hover {text-decoration: underline; color: #ff3333;}
+
+.navigatelink:link {text-decoration: underline; color: #000000;}
+.navigatelink:visited {text-decoration: underline; color: #000000;}
+.navigatelink:active {text-decoration: none;color:#cccccc;}
+.navigatelink:hover {text-decoration:none ; color: #cccccc;}
+
+
+.smalltime {
+	font-size: 7pt;
+	color: #333333;
+}
+}

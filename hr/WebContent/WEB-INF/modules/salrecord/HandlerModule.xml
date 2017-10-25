@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans> 
+  <bean id="HrSalRecordManageList" class="com.aibany.hr.module.salrecord.handler.HrSalRecordManageListHandler" page="salrecord/HrSalRecordManageList.jsp"/>
+</beans>

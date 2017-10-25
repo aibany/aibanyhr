@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans> 
+  <bean id="ModifyPassword" class="com.aibany.hr.module.system.handler.ModifyPasswordHandler" page="system/ModifyPassword.jsp"/>  
+  <bean id="ResetPassword" class="com.aibany.hr.module.system.handler.ResetPasswordHandler" page="system/ResetPassword.jsp"/>  
+  <bean id="SecurityGroupList" class="com.aibany.hr.module.system.handler.SecurityGroupListHandler" page="system/SecurityGroupList.jsp"/>  
+  <bean id="SecurityGroupPick" class="com.aibany.hr.module.system.handler.SecurityGroupPickHandler" page="system/SecurityGroupPick.jsp"/>  
+  <bean id="SecurityGroupEdit" class="com.aibany.hr.module.system.handler.SecurityGroupEditHandler" page="system/SecurityGroupEdit.jsp"/>  
+  <bean id="SecurityUserEdit" class="com.aibany.hr.module.system.handler.SecurityUserEditHandler" page="system/SecurityUserEdit.jsp"/>  
+  <bean id="SecurityRoleTreeManage" class="com.aibany.hr.module.system.handler.SecurityRoleTreeManageHandler" page="system/SecurityRoleTreeManage.jsp"/>  
+  <bean id="SecurityRoleParentSelect" class="com.aibany.hr.module.system.handler.SecurityRoleParentSelectHandler" page="system/SecurityRoleParentSelect.jsp"/>  
+  <bean id="SecurityUserQueryList" class="com.aibany.hr.module.system.handler.SecurityUserQueryListHandler" page="system/SecurityUserQueryList.jsp"/>  
+  <bean id="SecurityGroupTreeSelect" class="com.aibany.hr.module.system.handler.SecurityGroupTreeSelectHandler" page="system/SecurityGroupTreeSelect.jsp"/>  
+  <bean id="SecurityGroupQueryList" class="com.aibany.hr.module.system.handler.SecurityGroupQueryListHandler" page="system/SecurityGroupQueryList.jsp"/>  
+  <bean id="SecurityUserTreeSelect" class="com.aibany.hr.module.system.handler.SecurityUserTreeSelectHandler" page="system/SecurityUserTreeSelect.jsp"/>  
+  <bean id="SecurityAuthorizationConfig" class="com.aibany.hr.module.system.handler.SecurityAuthorizationConfigHandler" page="system/SecurityAuthorizationConfig.jsp"/>  
+  <bean id="SecurityRoleTreeSelect" class="com.aibany.hr.module.system.handler.SecurityRoleTreeSelectHandler" page="system/SecurityRoleTreeSelect.jsp"/>  
+  <bean id="SysLogQueryList" class="com.aibany.hr.module.system.handler.SysLogQueryListHandler" page="system/SysLogQueryList.jsp"/>  
+  <bean id="SysLogQueryDetail" class="com.aibany.hr.module.system.handler.SysLogQueryDetailHandler" page="system/SysLogQueryDetail.jsp"/>  
+  <bean id="FunctionTreeManage" class="com.aibany.hr.module.system.handler.FunctionTreeManageHandler" page="system/FunctionTreeManage.jsp"/>  
+  <bean id="FunctionParentSelect" class="com.aibany.hr.module.system.handler.FunctionParentSelectHandler" page="system/FunctionParentSelect.jsp"/>  
+  <bean id="HandlerManageList" class="com.aibany.hr.module.system.handler.HandlerManageListHandler" page="system/HandlerManageList.jsp"/>  
+  <bean id="HandlerManageEdit" class="com.aibany.hr.module.system.handler.HandlerManageEditHandler" page="system/HandlerManageEdit.jsp"/>  
+  <bean id="WcmGeneralGroup8ContentList" class="com.aibany.hr.module.system.handler.WcmGeneralGroup8ContentListHandler" page="system/WcmGeneralGroup8ContentList.jsp"/>  
+  <bean id="WcmGeneralGroupPick" class="com.aibany.hr.module.system.handler.WcmGeneralGroupPickHandler" page="system/WcmGeneralGroupPick.jsp"/>  
+  <bean id="WcmGeneralGroupEdit" class="com.aibany.hr.module.system.handler.WcmGeneralGroupEditHandler" page="system/WcmGeneralGroupEdit.jsp"/>  
+  <bean id="WcmGeneralResourceEdit" class="com.aibany.hr.module.system.handler.WcmGeneralResourceEditHandler" page="system/WcmGeneralResourceEdit.jsp"/>  
+  <bean id="ResourseUploader" class="com.aibany.hr.module.system.handler.ResourseUploaderHandler" page="system/ResourseUploader.jsp"/>  
+</beans>

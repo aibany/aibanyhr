@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="onlinecount">  
+  <select id="getAllOnlineCount" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select sum(ONLINECOUNT) as ONLINE_COUNT from SYS_ONLINECOUNT
+  </select>
+  <select id="getOnlineCountByIpAddress" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select sum(ONLINECOUNT) as ONLINE_COUNT from SYS_ONLINECOUNT where IPADDRRESS=#IPADDRRESS#
+  </select>
+  <select id="isExistCountByIpAddress" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select count(*) as EXIST_COUNT from SYS_ONLINECOUNT where IPADDRRESS=#IPADDRRESS#
+  </select>     
+  <insert id="insertRecord" parameterClass="com.agileai.domain.DataParam">
+    insert into SYS_ONLINECOUNT (IPADDRRESS,ONLINECOUNT) values (#IPADDRRESS#,#ONLINECOUNT#)
+  </insert>
+  <update id="updateRecord" parameterClass="com.agileai.domain.DataParam">
+    update SYS_ONLINECOUNT set ONLINECOUNT=#ONLINECOUNT# where IPADDRRESS=#IPADDRRESS#
+  </update>
+</sqlMap>

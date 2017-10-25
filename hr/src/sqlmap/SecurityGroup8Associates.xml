@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="SecurityGroup8Associates">  
+  <select id="queryTreeRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT
+from security_group order by GRP_PID,GRP_SORT
+  </select>
+  <select id="queryPickTreeRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT
+from security_group order by GRP_PID,GRP_SORT
+  </select>
+  <select id="queryTreeRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT
+from security_group
+where 1=1 
+<isNotEmpty prepend="and " property="GRP_ID">
+GRP_ID=#GRP_ID#
+</isNotEmpty>
+<isNotEmpty prepend="and " property="GRP_CODE">
+GRP_CODE=#GRP_CODE#
+</isNotEmpty>
+  </select> 
+  <insert id="insertTreeRecord" parameterClass="com.agileai.domain.DataParam">
+    insert into security_group (GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT) values (#GRP_ID#,#GRP_CODE#,#GRP_NAME#,#GRP_PID#,#GRP_DESC#,#GRP_STATE#,#GRP_SORT#)
+  </insert>  
+  <update id="updateTreeRecord" parameterClass="com.agileai.domain.DataParam">
+	update security_group
+set GRP_CODE=#GRP_CODE#,GRP_NAME=#GRP_NAME#,GRP_PID=#GRP_PID#,GRP_DESC=#GRP_DESC#,GRP_STATE=#GRP_STATE#,GRP_SORT=#GRP_SORT#
+where GRP_ID=#GRP_ID#
+  </update>
+  <delete id="deleteTreeRecord" parameterClass="String">
+    delete from security_group where GRP_ID = #value#
+  </delete> 
+  <select id="queryChildTreeRecords" parameterClass="String" resultClass="com.agileai.domain.DataRow">
+    select GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT
+from security_group where GRP_PID = #value# order by GRP_SORT
+  </select>
+  <select id="queryMaxSortId" parameterClass="String" resultClass="com.agileai.domain.DataRow">
+	select max(GRP_SORT) as MAX_GRP_SORT from security_group where GRP_PID = #value#
+  </select>
+  <select id="queryCurLevelRecords" parameterClass="String" resultClass="com.agileai.domain.DataRow">
+	select b.GRP_ID,b.GRP_CODE,b.GRP_NAME,b.GRP_PID,b.GRP_DESC,b.GRP_STATE,b.GRP_SORT
+from security_group a left join security_group b 
+on a.GRP_PID=b.GRP_PID
+where a.GRP_ID=#value#
+order by b.GRP_SORT
+  </select>  
+  <select id="findSecurityUserRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select a.USER_ID,a.USER_CODE,a.USER_NAME,a.USER_PWD,a.USER_SEX,a.USER_DESC,a.USER_STATE,a.USER_SORT,a.USER_MAIL,a.USER_PHONE
+	,b.GRP_ID,b.GRP_NAME
+from security_user a ,security_group b,security_user_group_rel c 
+where a.USER_ID = c.USER_ID
+and b.GRP_ID = c.GRP_ID
+<isNotEmpty prepend=" " property="columnId">
+and b.GRP_ID=#columnId#
+</isNotEmpty>
+<isNotEmpty prepend=" " property="userCode">
+and a.USER_CODE like '%$userCode$%'
+</isNotEmpty>
+<isNotEmpty prepend=" " property="userName">
+and a.USER_NAME like '%$userName$%'
+</isNotEmpty>
+order by a.USER_SORT
+  </select>
+  <select id="getSecurityUserRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select USER_ID,USER_CODE,USER_NAME,USER_PWD,USER_SEX,USER_DESC,USER_STATE,USER_SORT,USER_MAIL,USER_PHONE
+from security_user
+where 1=1 
+<isNotEmpty prepend="and " property="USER_ID">
+USER_ID=#USER_ID#
+</isNotEmpty>
+<isNotEmpty prepend="and " property="USER_CODE">
+USER_CODE=#USER_CODE#
+</isNotEmpty>
+  </select>
+  <insert id="insertSecurityUserRecord" parameterClass="com.agileai.domain.DataParam">
+	insert into security_user (USER_ID,USER_CODE,USER_NAME,USER_PWD,USER_SEX,USER_DESC,USER_STATE,USER_SORT,USER_MAIL,USER_PHONE) 
+	values (#USER_ID#,#USER_CODE#,#USER_NAME#,#USER_PWD#,#USER_SEX#,#USER_DESC#,#USER_STATE#,#USER_SORT#,#USER_MAIL#,#USER_PHONE#)
+  </insert>
+  <update id="updateSecurityUserRecord" parameterClass="com.agileai.domain.DataParam">
+    update security_user
+set USER_CODE=#USER_CODE#,USER_NAME=#USER_NAME#,USER_SEX=#USER_SEX#,USER_DESC=#USER_DESC#,USER_STATE=#USER_STATE#,USER_SORT=#USER_SORT#
+,USER_MAIL=#USER_MAIL#,USER_PHONE=#USER_PHONE#
+where USER_ID=#USER_ID#
+  </update>
+   <update id="updateSecurityUserPassword" parameterClass="com.agileai.domain.DataParam">
+    update security_user set USER_PWD=#USER_PWD# where USER_CODE=#USER_CODE#
+  </update>
+  <delete id="deleteSecurityUserRecord" parameterClass="com.agileai.domain.DataParam">
+    delete from security_user where USER_ID=#USER_ID#
+  </delete>
+  <select id="querySecurityUserRelation" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select GRP_ID,USER_ID
+	from security_user_group_rel
+	where 1=1
+	<isNotEmpty prepend=" and " property="GRP_ID">
+	GRP_ID=#GRP_ID#
+	</isNotEmpty>
+	and USER_ID=#USER_ID#
+  </select>
+  <insert id="insertSecurityUserRelation" parameterClass="com.agileai.domain.DataParam">
+	insert into security_user_group_rel (GRP_ID,USER_ID) values (#GRP_ID#,#USER_ID#)
+  </insert>
+  <update id="updateSecurityUserRelation" parameterClass="com.agileai.domain.DataParam">
+	update security_user_group_rel set GRP_ID = #NEW_GRP_ID#  where GRP_ID =#GRP_ID# and USER_ID = #USER_ID#
+  </update>
+  <delete id="deleteSecurityUserRelation" parameterClass="com.agileai.domain.DataParam">
+	delete from security_user_group_rel
+where GRP_ID=#GRP_ID#
+and USER_ID=#USER_ID#
+  </delete>
+</sqlMap>

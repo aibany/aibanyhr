@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans> 
+  <bean id="HrLeaveManageList" class="com.aibany.hr.module.leave.handler.HrLeaveManageListHandler" page="leave/HrLeaveManageList.jsp"/>  
+  <bean id="HrLeaveManageEdit" class="com.aibany.hr.module.leave.handler.HrLeaveManageEditHandler" page="leave/HrLeaveManageEdit.jsp"/>
+  <bean id="UserListSelectList" class="com.aibany.hr.module.leave.handler.UserListSelectListHandler" page="leave/UserListSelectList.jsp"/>
+  <bean id="MobileLeave" class="com.aibany.hr.module.leave.handler.MobileLeaveHandler" page=""/>
+</beans>

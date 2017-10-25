@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="codetype">  
+  <select id="findRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+    select
+        TYPE_ID ,
+        TYPE_NAME ,
+        TYPE_GROUP ,
+        TYPE_DESC,
+        IS_CACHED,
+        IS_UNITEADMIN,
+        IS_EDITABLE,
+        LEGNTT_LIMIT,
+        CHARACTER_LIMIT,EXTEND_SQL,SQL_BODY,SQL_COND
+    from sys_codetype 
+    where 1=1
+    <isNotEmpty prepend="AND" property="TYPE_GROUP">
+	TYPE_GROUP = #TYPE_GROUP#
+	</isNotEmpty>
+  </select>
+  <select id="getRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+    select
+        TYPE_ID ,
+        TYPE_NAME ,
+        TYPE_GROUP ,
+        TYPE_DESC,
+        IS_CACHED,
+        IS_UNITEADMIN,
+        IS_EDITABLE,
+        LEGNTT_LIMIT,
+        CHARACTER_LIMIT,EXTEND_SQL,SQL_BODY,SQL_COND        
+    from sys_codetype where TYPE_ID = #TYPE_ID#	
+  </select>
+  <insert id="insertRecord" parameterClass="com.agileai.domain.DataParam">
+    insert into sys_codetype (TYPE_ID, TYPE_NAME, TYPE_GROUP, TYPE_DESC
+    ,IS_CACHED,IS_UNITEADMIN,IS_EDITABLE,LEGNTT_LIMIT,CHARACTER_LIMIT,EXTEND_SQL,SQL_BODY,SQL_COND) 
+    values (#TYPE_ID#, #TYPE_NAME#, #TYPE_GROUP#, #TYPE_DESC#
+    ,#IS_CACHED#,#IS_UNITEADMIN#,#IS_EDITABLE#,#LEGNTT_LIMIT#,#CHARACTER_LIMIT#,#EXTEND_SQL#,#SQL_BODY#,#SQL_COND#)
+  </insert>
+  <update id="updateRecord" parameterClass="com.agileai.domain.DataParam">
+    update sys_codetype set TYPE_NAME = #TYPE_NAME#,
+      TYPE_GROUP = #TYPE_GROUP#,
+      TYPE_DESC = #TYPE_DESC#,
+	<isEqual prepend="" property="EXTEND_SQL" compareValue="N">      
+      IS_CACHED = #IS_CACHED#,
+      IS_UNITEADMIN = #IS_UNITEADMIN#,
+      IS_EDITABLE = #IS_EDITABLE#,
+      LEGNTT_LIMIT = #LEGNTT_LIMIT#,
+      CHARACTER_LIMIT = #CHARACTER_LIMIT#
+    </isEqual>
+    <isNotEqual prepend="" property="EXTEND_SQL" compareValue="N">
+	EXTEND_SQL=#EXTEND_SQL#,SQL_BODY=#SQL_BODY#,SQL_COND=#SQL_COND#
+	</isNotEqual>
+    where TYPE_ID = #TYPE_ID#
+  </update>
+  <delete id="deleteRecord" parameterClass="com.agileai.domain.DataParam">
+    delete from sys_codetype where TYPE_ID = #TYPE_ID#
+  </delete>
+</sqlMap>

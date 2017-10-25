@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="HrLeave">  
+  <select id="findRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select a.LEA_ID,a.USER_ID,b.USER_NAME as USER_ID_NAME,b.USER_CODE as USER_ID_CODE,a.LEA_DATE,a.LEA_TYPE,a.LEA_CAUSE,a.LEA_APPOVER,c.USER_NAME as LEA_APPOVER_NAME,a.LEA_APP_TIME,a.LEA_APP_OPINION,a.APP_RESULT,a.LEA_SDATE,a.LEA_EDATE,a.LEA_DAYS,STATE
+from hr_leave a join security_user b on a.USER_ID = b.USER_ID left join security_user c on a.LEA_APPOVER = c.USER_ID
+where 1=1
+<isNotEmpty prepend=" " property="sdate">
+and LEA_DATE &gt;= #sdate#
+</isNotEmpty>
+<isNotEmpty prepend=" " property="edate">
+and LEA_DATE &lt;= #edate#
+</isNotEmpty>
+<isNotEmpty prepend=" " property="currentUserId">
+and b.USER_ID = #currentUserId#
+</isNotEmpty>
+<isNotEmpty prepend=" " property="STATE">
+and STATE = #STATE#
+</isNotEmpty>
+<isNotEmpty prepend=" " property="userName_like">
+and b.USER_NAME like #userName_like# or b.USER_CODE like #userName_like#
+</isNotEmpty>
+order by LEA_SDATE DESC,b.USER_CODE
+  </select>
+  <select id="getRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+    select a.LEA_ID,a.USER_ID,b.USER_NAME as USER_ID_NAME,a.LEA_DATE,a.LEA_TYPE,a.LEA_CAUSE,a.LEA_APPOVER,c.USER_NAME as LEA_APPOVER_NAME,a.LEA_APP_TIME,a.LEA_APP_OPINION,a.APP_RESULT,a.LEA_SDATE,a.LEA_EDATE,a.LEA_DAYS,STATE
+from hr_leave a join security_user b on a.USER_ID = b.USER_ID left join security_user c on a.LEA_APPOVER = c.USER_ID
+where 1=1 
+<isNotEmpty prepend="and " property="LEA_ID">
+LEA_ID=#LEA_ID#
+</isNotEmpty>
+<isNotEmpty prepend=" " property="USER_CODE">
+and b.USER_ID = #USER_CODE#
+</isNotEmpty>
+<isNotEmpty prepend="and " property="leaDate">
+LEA_DATE=#leaDate#
+</isNotEmpty>
+  </select>
+   <select id="getNowRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+    select a.LEA_ID,a.USER_ID,b.USER_NAME as USER_ID_NAME,b.USER_CODE as USER_ID_CODE,a.LEA_DATE,a.LEA_TYPE,a.LEA_CAUSE,a.LEA_APPOVER,c.USER_NAME as LEA_APPOVER_NAME,a.LEA_APP_TIME,a.LEA_APP_OPINION,a.APP_RESULT,a.LEA_SDATE,a.LEA_EDATE,a.LEA_DAYS,STATE
+from hr_leave a join security_user b on a.USER_ID = b.USER_ID left join security_user c on a.LEA_APPOVER = c.USER_ID
+where 1=1 
+<isNotEmpty prepend="and " property="leaDate">
+LEA_DATE=#leaDate#
+</isNotEmpty>
+<isNotEmpty prepend="and " property="currentUser">
+b.USER_ID=#currentUser#
+</isNotEmpty>
+<isNotEmpty prepend="and " property="LEA_ID">
+LEA_ID=#LEA_ID#
+</isNotEmpty>
+  </select>
+  <insert id="insertRecord" parameterClass="com.agileai.domain.DataParam">
+    insert into hr_leave (LEA_ID,USER_ID,LEA_DATE,LEA_TYPE,LEA_SDATE,LEA_EDATE,LEA_DAYS,LEA_CAUSE,STATE) 
+    values (#LEA_ID:CHAR#,#USER_ID:CHAR#,#LEA_DATE:VARCHAR#,#LEA_TYPE:VARCHAR#,#LEA_SDATE:TIMESTAMP#,#LEA_EDATE:TIMESTAMP#,#LEA_DAYS:VARCHAR#,#LEA_CAUSE:VARCHAR#,"drafe")
+  </insert>
+  <update id="updateRecord" parameterClass="com.agileai.domain.DataParam">
+    update hr_leave
+set USER_ID=#USER_ID:CHAR#,LEA_DATE=#LEA_DATE:VARCHAR#,LEA_TYPE=#LEA_TYPE:VARCHAR#,LEA_SDATE=#LEA_SDATE:TIMESTAMP#,LEA_EDATE=#LEA_EDATE:TIMESTAMP#,LEA_DAYS=#LEA_DAYS:VARCHAR#,LEA_CAUSE=#LEA_CAUSE:VARCHAR#,STATE=#STATE:VARCHAR#
+where LEA_ID=#LEA_ID#
+  </update>
+  <update id="approveRecord" parameterClass="com.agileai.domain.DataParam">
+    update hr_leave
+set LEA_APPOVER=#LEA_APPOVER:VARCHAR#,LEA_APP_TIME=#LEA_APP_TIME:TIMESTAMP#,APP_RESULT=#APP_RESULT:VARCHAR#,LEA_APP_OPINION=#LEA_APP_OPINION:VARCHAR#,STATE=#STATE:VARCHAR#
+where LEA_ID=#LEA_ID#
+  </update>
+	<update id="submitRecord" parameterClass="com.agileai.domain.DataParam">
+		update hr_leave
+		set STATE=#STATE:VARCHAR#
+		where LEA_ID=#LEA_ID#
+	</update> 
+    <delete id="deleteRecord" parameterClass="com.agileai.domain.DataParam">
+    delete from hr_leave where LEA_ID=#LEA_ID#
+  </delete>
+	<select id="findLeaveList" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		SELECT LEA_ID,LEA_DATE,LEA_DAYS,d.CODE_NAME as LEA_TYPE,c.CODE_NAME as STATE,USER_NAME
+		FROM hr_leave a left join security_user b on a.USER_ID = b.USER_ID
+		left join sys_codelist c on a.STATE = c.CODE_ID
+		left join sys_codelist d on a.LEA_TYPE = d.CODE_ID
+		where 1=1
+		and b.USER_CODE = #userCode#
+		and c.TYPE_ID = 'STATE'
+		and d.TYPE_ID = 'LEA_TYPE'
+		order by LEA_DATE desc
+<!-- 		limit #tabPages#,2 -->
+	</select>  
+	<select id="getAllowanceYear" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+		select EMP_ANNUAL_LEAVE_DAYS from hr_employee 
+		where 1=1
+		<isNotEmpty prepend=" " property="USER_CODE">
+		and EMP_CODE = #USER_CODE#
+		</isNotEmpty>
+	</select>
+	<update id="updateAllowanceYear" parameterClass="com.agileai.domain.DataParam">
+		update hr_employee set EMP_ANNUAL_LEAVE_DAYS = #DAYS#
+		where 1=1
+		<isNotEmpty prepend=" " property="USER_CODE">
+		and EMP_CODE = #USER_CODE#
+		</isNotEmpty>
+	</update>
+</sqlMap>

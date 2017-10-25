@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="hremployee">
+	<select id="findMasterRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select
+		EMP_ID,EMP_CODE,EMP_NAME,EMP_SEX,EMP_BIRTHDAY,EMP_NATIONAL,
+		EMP_PARTY,EMP_ID_NUMBER,EMP_TEL,EMP_NATIVE_PLACE,EMP_MARITAL_STATUS,
+		EMP_REFERENCE_TIME,sg.GRP_NAME as EMP_NOW_DEPT_NAME,EMP_NOW_JOB,EMP_INDUCTION_TIME,EMP_EMAIL,EMP_REGULAR_TIME,
+		EMP_EDUCATION,EMP_BASIC,EMP_PERFORMANCE,EMP_SUBSIDY,EMP_STATE,EMP_WORK_STATE,EMP_DIMISSION_TIME,EMP_TAX,EMP_INSURE,
+		EMP_ANNUAL_LEAVE_DAYS,EMP_ALLOWANCE,EMP_AWARD_ALLDAYS,EMP_ALLOWANCE_MIDROOM,EMP_ALLOWANCE_NIGHT,
+		EMP_ALLOWANCE_OTHER,EMP_FUND_HOUSE,EMP_ALLOWANCE_YEAR,EMP_PARTICIPATE_SALARY,EMP_EMERG_MAN,EMP_EMERG_PHONE
+		from hr_employee emp left join security_group sg on emp.EMP_NOW_DEPT = sg.GRP_ID
+		where 1=1
+		<isNotEmpty prepend=" " property="empName_like">
+			and EMP_NAME like #empName_like# or EMP_CODE like #empName_like#
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="empSex">
+			and EMP_SEX = #empSex#
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="currentUserCode">
+			<isNotEqual property="currentUserCode" compareValue="admin" prepend="and">
+               		EMP_CODE =
+					#currentUserCode#
+            </isNotEqual>
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="EMP_STATE">
+			and EMP_STATE =
+			#EMP_STATE#
+		</isNotEmpty>
+		order by EMP_CODE
+	</select>
+	<select id="getMasterRecord" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select
+		EMP_ID,EMP_CODE,EMP_NAME,EMP_SEX,EMP_BIRTHDAY,EMP_NATIONAL,
+		EMP_PARTY,EMP_ID_NUMBER,EMP_TEL,EMP_NATIVE_PLACE,EMP_MARITAL_STATUS,
+		EMP_REFERENCE_TIME,sg.GRP_NAME as EMP_NOW_DEPT_NAME,EMP_NOW_DEPT,EMP_NOW_JOB,EMP_INDUCTION_TIME,EMP_EMAIL,EMP_REGULAR_TIME,
+		EMP_EDUCATION,EMP_BASIC,EMP_PERFORMANCE,EMP_SUBSIDY,EMP_STATE,EMP_WORK_STATE,EMP_DIMISSION_TIME,EMP_TAX,EMP_INSURE,
+		EMP_ANNUAL_LEAVE_DAYS,EMP_ALLOWANCE,EMP_AWARD_ALLDAYS,EMP_ALLOWANCE_MIDROOM,EMP_ALLOWANCE_NIGHT,
+		EMP_ALLOWANCE_OTHER,EMP_FUND_HOUSE,EMP_ALLOWANCE_YEAR,EMP_PARTICIPATE_SALARY,EMP_EMERG_MAN,EMP_EMERG_PHONE,EMP_BANK_CARD,EMP_BANK_CARDINFO
+		from hr_employee emp left join security_group sg on emp.EMP_NOW_DEPT = sg.GRP_ID
+		where 1=1
+		<isNotEmpty prepend="and " property="EMP_ID">
+			EMP_ID=#EMP_ID#
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="EMP_CODE">
+			<isNotEqual property="EMP_CODE" compareValue="admin" prepend="and">
+               		EMP_CODE =
+					#EMP_CODE#
+            </isNotEqual>
+		</isNotEmpty>
+	</select>
+	<insert id="insertMasterRecord" parameterClass="com.agileai.domain.DataParam">
+		insert into
+		hr_employee
+		(EMP_ID,EMP_CODE,EMP_NAME,EMP_SEX,EMP_BIRTHDAY,EMP_NATIONAL,EMP_ID_NUMBER,EMP_TEL,
+		EMP_EMAIL,EMP_NATIVE_PLACE,EMP_PARTY,EMP_MARITAL_STATUS,EMP_EDUCATION,EMP_NOW_DEPT,
+		EMP_NOW_JOB,EMP_REFERENCE_TIME,EMP_INDUCTION_TIME,EMP_REGULAR_TIME,EMP_BASIC,
+		EMP_PERFORMANCE,EMP_SUBSIDY,EMP_STATE,EMP_WORK_STATE,EMP_DIMISSION_TIME,
+		EMP_TAX,EMP_INSURE,EMP_ANNUAL_LEAVE_DAYS,EMP_ALLOWANCE,EMP_AWARD_ALLDAYS,EMP_ALLOWANCE_MIDROOM,
+		EMP_ALLOWANCE_NIGHT,EMP_ALLOWANCE_OTHER,EMP_FUND_HOUSE,EMP_ALLOWANCE_YEAR,EMP_PARTICIPATE_SALARY,EMP_EMERG_MAN,EMP_EMERG_PHONE,EMP_BANK_CARD,EMP_BANK_CARDINFO)
+		values
+		(#EMP_ID:CHAR#,#EMP_CODE:VARCHAR#,#EMP_NAME:VARCHAR#,#EMP_SEX:CHAR#,
+		#EMP_BIRTHDAY:DATE#,#EMP_NATIONAL:VARCHAR#,#EMP_ID_NUMBER:VARCHAR#,
+		#EMP_TEL:VARCHAR#,#EMP_EMAIL:VARCHAR#,#EMP_NATIVE_PLACE:VARCHAR#,
+		#EMP_PARTY:CHAR#,#EMP_MARITAL_STATUS:VARCHAR#,#EMP_EDUCATION:VARCHAR#,
+		#EMP_NOW_DEPT:VARCHAR#,#EMP_NOW_JOB:VARCHAR#,#EMP_REFERENCE_TIME:DATE#,
+		#EMP_INDUCTION_TIME:DATE#,#EMP_REGULAR_TIME:DATE#,#EMP_BASIC:DECIMAL#,
+		#EMP_PERFORMANCE:DECIMAL#,#EMP_SUBSIDY:DECIMAL#,#EMP_STATE:VARCHAR#,
+		#EMP_WORK_STATE:VARCHAR#,#EMP_DIMISSION_TIME:DATE#,#EMP_TAX:DECIMAL#,
+		#EMP_INSURE:DECIMAL#,#EMP_ANNUAL_LEAVE_DAYS:VARCHAR#,#EMP_ALLOWANCE:DECIMAL#,
+		#EMP_AWARD_ALLDAYS#,#EMP_ALLOWANCE_MIDROOM#,#EMP_ALLOWANCE_NIGHT#,
+		#EMP_ALLOWANCE_OTHER#,#EMP_FUND_HOUSE#,#EMP_ALLOWANCE_YEAR#,
+		#EMP_PARTICIPATE_SALARY:VARCHAR#,
+		#EMP_EMERG_MAN:VARCHAR#,
+		#EMP_EMERG_PHONE:VARCHAR#,
+		#EMP_BANK_CARD:VARCHAR#,
+		#EMP_BANK_CARDINFO:VARCHAR#
+		)
+	</insert>
+	<update id="updateMasterRecord" parameterClass="com.agileai.domain.DataParam">
+		update
+		hr_employee
+		set
+		EMP_CODE=#EMP_CODE:VARCHAR#,EMP_NAME=#EMP_NAME:VARCHAR#,EMP_SEX=#EMP_SEX:CHAR#,
+		EMP_BIRTHDAY=#EMP_BIRTHDAY:DATE#,EMP_NATIONAL=#EMP_NATIONAL:VARCHAR#,
+		EMP_ID_NUMBER=#EMP_ID_NUMBER:VARCHAR#,EMP_TEL=#EMP_TEL:VARCHAR#,EMP_EMAIL=#EMP_EMAIL:VARCHAR#,
+		EMP_NATIVE_PLACE=#EMP_NATIVE_PLACE:VARCHAR#,EMP_PARTY=#EMP_PARTY:CHAR#,
+		EMP_MARITAL_STATUS=#EMP_MARITAL_STATUS:VARCHAR#,EMP_EDUCATION=#EMP_EDUCATION:VARCHAR#,
+		EMP_NOW_DEPT=#EMP_NOW_DEPT:VARCHAR#,EMP_NOW_JOB=#EMP_NOW_JOB:VARCHAR#,EMP_REFERENCE_TIME=#EMP_REFERENCE_TIME:DATE#,
+		EMP_INDUCTION_TIME=#EMP_INDUCTION_TIME:DATE#,EMP_REGULAR_TIME=#EMP_REGULAR_TIME:DATE#,
+		EMP_BASIC=#EMP_BASIC:DECIMAL#,EMP_PERFORMANCE=#EMP_PERFORMANCE:DECIMAL#,EMP_SUBSIDY=#EMP_SUBSIDY:DECIMAL#,
+		EMP_STATE=#EMP_STATE:VARCHAR#,EMP_WORK_STATE=#EMP_WORK_STATE:VARCHAR#,EMP_DIMISSION_TIME=#EMP_DIMISSION_TIME:DATE#,
+		EMP_TAX=#EMP_TAX:DECIMAL#,EMP_INSURE=#EMP_INSURE:DECIMAL#,EMP_ANNUAL_LEAVE_DAYS=#EMP_ANNUAL_LEAVE_DAYS:VARCHAR#,
+		EMP_ALLOWANCE=#EMP_ALLOWANCE:DECIMAL#,
+		EMP_AWARD_ALLDAYS=#EMP_AWARD_ALLDAYS:DECIMAL#,
+		EMP_ALLOWANCE_MIDROOM=#EMP_ALLOWANCE_MIDROOM:DECIMAL#,
+		EMP_ALLOWANCE_NIGHT=#EMP_ALLOWANCE_NIGHT:DECIMAL#,
+		EMP_ALLOWANCE_OTHER=#EMP_ALLOWANCE_OTHER:DECIMAL#,
+		EMP_FUND_HOUSE=#EMP_FUND_HOUSE:DECIMAL#,
+		EMP_ALLOWANCE_YEAR=#EMP_ALLOWANCE_YEAR:DECIMAL#,
+		EMP_PARTICIPATE_SALARY=#EMP_PARTICIPATE_SALARY:VARCHAR#,
+		EMP_EMERG_MAN=#EMP_EMERG_MAN:VARCHAR#,
+		EMP_EMERG_PHONE=#EMP_EMERG_PHONE:VARCHAR#,
+		EMP_BANK_CARD=#EMP_BANK_CARD:VARCHAR#,
+		EMP_BANK_CARDINFO=#EMP_BANK_CARDINFO:VARCHAR#
+		where EMP_ID=#EMP_ID#
+	</update>
+	<update id="approveRecord" parameterClass="com.agileai.domain.DataParam">
+		update hr_employee
+		set
+		EMP_STATE=#EMP_STATE:VARCHAR#
+		where EMP_ID=#EMP_ID#
+	</update>
+	<update id="revokeApprovalRecord" parameterClass="com.agileai.domain.DataParam">
+		update
+		hr_employee
+		set
+		EMP_STATE=#EMP_STATE:VARCHAR#
+		where EMP_ID=#EMP_ID#
+	</update>
+
+	<delete id="deleteMasterRecord" parameterClass="com.agileai.domain.DataParam">
+		delete from
+		hr_employee where EMP_ID=#EMP_ID#
+	</delete>
+	<select id="findHrEducationRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select
+		EDU_ID,EMP_ID,EDU_IN_TIME,EDU_OUT_TIME,EDU_EDUCATION
+		from hr_education
+		where EMP_ID=#EMP_ID#
+		order by EDU_IN_TIME
+	</select>
+	<select id="getHrEducationRecord" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select EDU_ID,EMP_ID,EDU_IN_TIME,EDU_OUT_TIME,EDU_EDUCATION
+		from
+		hr_education
+		where 1=1
+		<isNotEmpty prepend="and " property="EDU_ID">
+			EDU_ID=#EDU_ID#
+		</isNotEmpty>
+	</select>
+	<delete id="deleteHrEducationRecords" parameterClass="com.agileai.domain.DataParam">
+		delete from
+		hr_education
+		where EMP_ID=#EMP_ID#
+	</delete>
+	<delete id="deleteHrEducationRecord" parameterClass="com.agileai.domain.DataParam">
+		delete from
+		hr_education where EDU_ID=#EDU_ID#
+	</delete>
+	<insert id="insertHrEducationRecord" parameterClass="com.agileai.domain.DataParam">
+		insert into
+		hr_education
+		(EDU_ID,EMP_ID,EDU_IN_TIME,EDU_OUT_TIME,EDU_EDUCATION)
+		values
+		(#EDU_ID:CHAR#,#EMP_ID:CHAR#,#EDU_IN_TIME:DATE#,#EDU_OUT_TIME:DATE#,#EDU_EDUCATION:VARCHAR#)
+	</insert>
+	<update id="updateHrEducationRecord" parameterClass="com.agileai.domain.DataParam">
+		update
+		hr_education
+		set
+		EMP_ID=#EMP_ID:CHAR#,EDU_IN_TIME=#EDU_IN_TIME:DATE#,EDU_OUT_TIME=#EDU_OUT_TIME:DATE#,EDU_EDUCATION=#EDU_EDUCATION:VARCHAR#
+		where EDU_ID=#EDU_ID#
+	</update>
+	<select id="findHrExperienceRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select
+		EXP_ID,EMP_ID,EXP_IN_TIME,EXP_OUT_TIME,EXP_EXPERIENCE
+		from
+		hr_experience
+		where EMP_ID=#EMP_ID#
+		order by EXP_IN_TIME
+	</select>
+	<select id="getHrExperienceRecord" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select EXP_ID,EMP_ID,EXP_IN_TIME,EXP_OUT_TIME,EXP_EXPERIENCE
+		from
+		hr_experience
+		where 1=1
+		<isNotEmpty prepend="and " property="EXP_ID">
+			EXP_ID=#EXP_ID#
+		</isNotEmpty>
+	</select>
+	<delete id="deleteHrExperienceRecords" parameterClass="com.agileai.domain.DataParam">
+		delete
+		from hr_experience
+		where EMP_ID=#EMP_ID#
+	</delete>
+	<delete id="deleteHrExperienceRecord" parameterClass="com.agileai.domain.DataParam">
+		delete from
+		hr_experience where EXP_ID=#EXP_ID#
+	</delete>
+	<insert id="insertHrExperienceRecord" parameterClass="com.agileai.domain.DataParam">
+		insert into
+		hr_experience
+		(EXP_ID,EMP_ID,EXP_IN_TIME,EXP_OUT_TIME,EXP_EXPERIENCE)
+		values
+		(#EXP_ID:CHAR#,#EMP_ID:CHAR#,#EXP_IN_TIME:DATE#,#EXP_OUT_TIME:DATE#,#EXP_EXPERIENCE:VARCHAR#)
+	</insert>
+	<update id="updateHrExperienceRecord" parameterClass="com.agileai.domain.DataParam">
+		update
+		hr_experience
+		set
+		EMP_ID=#EMP_ID:CHAR#,EXP_IN_TIME=#EXP_IN_TIME:DATE#,EXP_OUT_TIME=#EXP_OUT_TIME:DATE#,EXP_EXPERIENCE=#EXP_EXPERIENCE:VARCHAR#
+		where EXP_ID=#EXP_ID#
+	</update>
+	<select id="findHrWorkPerformanceRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select
+		PER_ID,EMP_ID,PER_IN_TIME,PER_NOW_TIME,PER_WORK_PERFORMANCE
+		from
+		hr_work_performance
+		where EMP_ID=#EMP_ID#
+		order by PER_IN_TIME
+	</select>
+	<select id="getHrWorkPerformanceRecord" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select PER_ID,EMP_ID,PER_IN_TIME,PER_NOW_TIME,PER_WORK_PERFORMANCE
+		from hr_work_performance
+		where 1=1
+		<isNotEmpty prepend="and " property="PER_ID">
+			PER_ID=#PER_ID#
+		</isNotEmpty>
+	</select>
+	<delete id="deleteHrWorkPerformanceRecords" parameterClass="com.agileai.domain.DataParam">
+		delete from hr_work_performance
+		where EMP_ID=#EMP_ID#
+	</delete>
+	<delete id="deleteHrWorkPerformanceRecord" parameterClass="com.agileai.domain.DataParam">
+		delete from hr_work_performance where PER_ID=#PER_ID#
+	</delete>
+	<insert id="insertHrWorkPerformanceRecord" parameterClass="com.agileai.domain.DataParam">
+		insert into hr_work_performance
+		(PER_ID,EMP_ID,PER_IN_TIME,PER_NOW_TIME,PER_WORK_PERFORMANCE) values
+		(#PER_ID:CHAR#,#EMP_ID:CHAR#,#PER_IN_TIME:DATE#,#PER_NOW_TIME:DATE#,#PER_WORK_PERFORMANCE:VARCHAR#)
+	</insert>
+	<update id="updateHrWorkPerformanceRecord" parameterClass="com.agileai.domain.DataParam">
+		update hr_work_performance
+		set
+		EMP_ID=#EMP_ID:CHAR#,PER_IN_TIME=#PER_IN_TIME:DATE#,PER_NOW_TIME=#PER_NOW_TIME:DATE#,PER_WORK_PERFORMANCE=#PER_WORK_PERFORMANCE:VARCHAR#
+		where PER_ID=#PER_ID#
+	</update>
+	<insert id="insertSecurityUserGroupRelRecord" parameterClass="com.agileai.domain.DataParam">
+		insert into security_user_group_rel (GRP_ID,USER_ID)
+		values
+		(#GRP_ID#,#USER_ID#)
+	</insert>
+
+	<insert id="insertSecurityUserRecord" parameterClass="com.agileai.domain.DataParam">
+		insert into
+		security_user
+		(USER_ID,USER_CODE,USER_NAME,USER_PWD,USER_SEX,USER_DESC,USER_STATE,USER_SORT,USER_MAIL,USER_PHONE)values
+		(#USER_ID:CHAR#,#USER_CODE:VARCHAR#,#USER_NAME:VARCHAR#,#USER_PWD:VARCHAR#,#USER_SEX:VARCHAR#,#USER_DESC:VARCHAR#,#USER_STATE:VARCHAR#,#USER_STATE:INT#,#USER_MAIL:VARCHAR#,#USER_PHONE#)
+	</insert>
+	<update id="updateSecurityUserRecord" parameterClass="com.agileai.domain.DataParam">
+		update
+		security_user set
+		USER_CODE=#EMP_CODE#,USER_NAME=#EMP_NAME#,USER_SEX=#EMP_SEX#,USER_DESC="普通用户",USER_SORT="3",USER_MAIL=#EMP_EMAIL#,USER_PHONE=#EMP_TEL#
+		where USER_CODE=#EMP_CODE#
+	</update>
+
+</sqlMap>

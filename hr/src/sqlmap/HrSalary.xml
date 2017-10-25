@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="HrSalary">
+	<select id="findRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select a.SAL_ID,a.SAL_USER,
+		c.EMP_NAME as SAL_NAME,c.EMP_CODE as SAL_CODE,
+		a.SAL_YEAR,a.SAL_MONTH,
+		sg.GRP_NAME as EMP_NOW_DEPT_NAME,
+		a.SAL_TOTAL,a.SAL_ACTUAL,a.SAL_VALID_DAYS,a.SAL_WORK_DAYS,
+		a.SAL_BASIC,a.SAL_OVERTIME_NORMAL,a.SAL_OVERTIME_WEEKEND,a.SAL_OVERTIME_HOLIDAY,
+		a.SAL_OVERTIME,a.SAL_AWARD_ALLDAYS,a.SAL_ALLOWANCE_MIDROOM,a.SAL_ALLOWANCE_NIGHT,
+		a.SAL_ALLOWANCE_OTHER,a.SAL_PERFORMANCE,a.SAL_SUBSIDY,a.SAL_ALLOWANCE,a.SAL_ALLOWANCE_OUT,
+		a.SAL_ALLOWANCE_AIR,a.SAL_ALLOWANCE_ALL,a.SAL_ALLOWANCE_YEAR,a.SAL_ALLOWANCE_RECORD,
+		a.SAL_ALLOWANCE_RECORD_WHAT,a.SAL_DEDUCT_NOWORK,a.SAL_DEDUCT_NOWORKDAYS,a.SAL_DEDUCT_RECORD_WHAT,
+		a.SAL_DEDUCT_EAT,a.SAL_DEDUCT_SIGNCARD,a.SAL_DEDUCT_LEAVE,a.SAL_INSURE,a.SAL_FUND_HOUSE,
+		a.SAL_FUND_ILL,a.SAL_DEDUCT_BUYCARD,a.SAL_DEDUCT_LATER,a.SAL_TAX,SAL_REMARKS,a.SAL_STATE,
+		CONCAT(a.SAL_YEAR,'-',a.SAL_MONTH) as SAL_YEAR_MONTH,
+		(a.SAL_TOTAL-a.SAL_ACTUAL) as SAL_DECEASE
+		from hr_salary a
+		LEFT JOIN security_user b ON a.SAL_USER=b.USER_ID
+		LEFT JOIN hr_employee c ON b.USER_CODE=c.EMP_CODE
+		left join security_group
+		sg on c.EMP_NOW_DEPT = sg.GRP_ID
+		where 1=1
+		<isNotEmpty prepend=" " property="salYear">
+			and SAL_YEAR = #salYear#
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="salMonth">
+			and SAL_MONTH = #salMonth#
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="salState">
+			and SAL_STATE = #salState#
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="currentUserCode">
+			and a.SAL_USER =
+			#currentUserCode#
+		</isNotEmpty>
+		order by b.USER_CODE,SAL_YEAR desc,SAL_MONTH desc
+	</select>
+	<select id="getRecord" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select
+		a.SAL_ID,a.SAL_USER,
+		c.EMP_NAME as SAL_NAME,c.EMP_CODE as SAL_CODE,
+		a.SAL_YEAR,a.SAL_MONTH,
+		sg.GRP_NAME as EMP_NOW_DEPT_NAME,
+		a.SAL_TOTAL,a.SAL_ACTUAL,a.SAL_VALID_DAYS,a.SAL_WORK_DAYS,
+		a.SAL_BASIC,a.SAL_OVERTIME_NORMAL,a.SAL_OVERTIME_WEEKEND,a.SAL_OVERTIME_HOLIDAY,
+		a.SAL_OVERTIME,a.SAL_AWARD_ALLDAYS,a.SAL_ALLOWANCE_MIDROOM,a.SAL_ALLOWANCE_NIGHT,
+		a.SAL_ALLOWANCE_OTHER,a.SAL_PERFORMANCE,a.SAL_SUBSIDY,a.SAL_ALLOWANCE,a.SAL_ALLOWANCE_OUT,
+		a.SAL_ALLOWANCE_AIR,a.SAL_ALLOWANCE_ALL,a.SAL_ALLOWANCE_YEAR,a.SAL_ALLOWANCE_RECORD,
+		a.SAL_ALLOWANCE_RECORD_WHAT,a.SAL_DEDUCT_NOWORK,a.SAL_DEDUCT_NOWORKDAYS,a.SAL_DEDUCT_RECORD_WHAT,
+		a.SAL_DEDUCT_EAT,a.SAL_DEDUCT_SIGNCARD,a.SAL_DEDUCT_LEAVE,a.SAL_INSURE,a.SAL_FUND_HOUSE,
+		a.SAL_FUND_ILL,a.SAL_DEDUCT_BUYCARD,a.SAL_DEDUCT_LATER,a.SAL_TAX,a.SAL_STATE,SAL_REMARKS,
+		CONCAT(a.SAL_YEAR,'-',a.SAL_MONTH) as SAL_YEAR_MONTH,
+		(a.SAL_TOTAL-a.SAL_ACTUAL) as SAL_DECEASE
+		from hr_salary a
+		LEFT JOIN security_user b ON a.SAL_USER=b.USER_ID LEFT
+		JOIN hr_employee c ON b.USER_CODE=c.EMP_CODE
+		left join security_group sg on c.EMP_NOW_DEPT = sg.GRP_ID
+		where 1=1
+		<isNotEmpty prepend="and " property="SAL_ID">
+			SAL_ID=#SAL_ID#
+		</isNotEmpty>
+	</select>
+	<select id="findMasterDaysRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select
+		a.EMP_ID,EMP_CODE,EMP_NAME,EMP_SEX,EMP_BIRTHDAY,EMP_NATIONAL,EMP_PARTY,EMP_ID_NUMBER,
+		EMP_TEL,EMP_NATIVE_PLACE,EMP_MARITAL_STATUS,
+		EMP_REFERENCE_TIME,EMP_NOW_DEPT,EMP_NOW_JOB,EMP_INDUCTION_TIME,EMP_EMAIL,
+		EMP_REGULAR_TIME,EMP_EDUCATION,EMP_BASIC,c.USER_ID,
+		EMP_PERFORMANCE,EMP_SUBSIDY,EMP_INSURE,EMP_TAX,EMP_AWARD_ALLDAYS,EMP_ALLOWANCE,EMP_ALLOWANCE_MIDROOM,EMP_ALLOWANCE_NIGHT,
+		EMP_ALLOWANCE_OTHER,EMP_FUND_HOUSE,EMP_ALLOWANCE_YEAR,EMP_DIMISSION_TIME,EMP_WORK_STATE
+		from hr_employee a LEFT JOIN security_user c ON a.EMP_CODE =
+		c.USER_CODE
+		where 1=1
+		and EMP_PARTICIPATE_SALARY = 'Y'
+		and c.USER_ID not in (select
+		b.SAL_USER
+		from
+		hr_salary b
+		where 1=1
+		and b.SAL_YEAR = #year#
+		and b.SAL_MONTH =
+		#month#
+		and b.SAL_STATE = '1')
+	</select>
+	<select id="retrieveValidDays" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select VALID_YEAR,VALID_MONTH,VALID_DAYS
+		from hr_valid
+		where 1=1
+		<isNotEmpty prepend="and " property="year">
+			VALID_YEAR=#year#
+		</isNotEmpty>
+		<isNotEmpty prepend="and " property="month">
+			VALID_MONTH=#month#
+		</isNotEmpty>
+	</select>
+	<insert id="insertRecord" parameterClass="com.agileai.domain.DataParam">
+		insert into hr_salary
+		(SAL_ID,SAL_USER,SAL_YEAR,SAL_MONTH,
+		SAL_TOTAL,SAL_ACTUAL,SAL_VALID_DAYS,
+		SAL_WORK_DAYS,SAL_BASIC,SAL_OVERTIME_NORMAL,
+		SAL_OVERTIME_WEEKEND,SAL_OVERTIME_HOLIDAY,SAL_OVERTIME,
+		SAL_AWARD_ALLDAYS,SAL_ALLOWANCE_MIDROOM,SAL_ALLOWANCE_NIGHT,
+		SAL_ALLOWANCE_OTHER,SAL_PERFORMANCE,SAL_SUBSIDY,SAL_ALLOWANCE,SAL_ALLOWANCE_OUT,
+		SAL_ALLOWANCE_AIR,SAL_ALLOWANCE_ALL,SAL_ALLOWANCE_YEAR,SAL_ALLOWANCE_RECORD,
+		SAL_ALLOWANCE_RECORD_WHAT,SAL_DEDUCT_NOWORK,SAL_DEDUCT_NOWORKDAYS,SAL_DEDUCT_RECORD_WHAT,
+		SAL_DEDUCT_EAT,SAL_DEDUCT_SIGNCARD,SAL_DEDUCT_LEAVE,SAL_INSURE,SAL_FUND_HOUSE,
+		SAL_FUND_ILL,SAL_DEDUCT_BUYCARD,SAL_DEDUCT_LATER,SAL_TAX,SAL_STATE,SAL_REMARKS)
+		values
+		(
+		#SAL_ID#,#SAL_USER#,#SAL_YEAR#,#SAL_MONTH#,
+        #SAL_TOTAL#,#SAL_ACTUAL#,#SAL_VALID_DAYS#,#SAL_WORK_DAYS#,
+        #SAL_BASIC#,#SAL_OVERTIME_NORMAL#,#SAL_OVERTIME_WEEKEND#,#SAL_OVERTIME_HOLIDAY#,
+        #SAL_OVERTIME#,#SAL_AWARD_ALLDAYS#,#SAL_ALLOWANCE_MIDROOM#,#SAL_ALLOWANCE_NIGHT#,
+        #SAL_ALLOWANCE_OTHER#,#SAL_PERFORMANCE#,#SAL_SUBSIDY#,#SAL_ALLOWANCE#,#SAL_ALLOWANCE_OUT#,
+        #SAL_ALLOWANCE_AIR#,#SAL_ALLOWANCE_ALL#,#SAL_ALLOWANCE_YEAR#,#SAL_ALLOWANCE_RECORD#,
+        #SAL_ALLOWANCE_RECORD_WHAT#,#SAL_DEDUCT_NOWORK#,#SAL_DEDUCT_NOWORKDAYS#,#SAL_DEDUCT_RECORD_WHAT#,
+        #SAL_DEDUCT_EAT#,#SAL_DEDUCT_SIGNCARD#,#SAL_DEDUCT_LEAVE#,#SAL_INSURE#,#SAL_FUND_HOUSE#,
+        #SAL_FUND_ILL#,#SAL_DEDUCT_BUYCARD#,#SAL_DEDUCT_LATER#,#SAL_TAX#,#SAL_STATE#,#SAL_REMARKS#
+		)
+	</insert>
+	<update id="updateRecord" parameterClass="com.agileai.domain.DataParam">
+		update hr_salary
+		set
+		SAL_USER=#SAL_USER#,
+		SAL_YEAR=#SAL_YEAR#,
+		SAL_MONTH=#SAL_MONTH#,
+		SAL_TOTAL=#SAL_TOTAL#,
+		SAL_ACTUAL=#SAL_ACTUAL#,
+		SAL_VALID_DAYS=#SAL_VALID_DAYS#,
+		SAL_WORK_DAYS=#SAL_WORK_DAYS#,
+		SAL_BASIC=#SAL_BASIC#,
+		SAL_OVERTIME_NORMAL=#SAL_OVERTIME_NORMAL#,
+		SAL_OVERTIME_WEEKEND=#SAL_OVERTIME_WEEKEND#,
+		SAL_OVERTIME_HOLIDAY=#SAL_OVERTIME_HOLIDAY#,
+		SAL_OVERTIME=#SAL_OVERTIME#,
+		SAL_AWARD_ALLDAYS=#SAL_AWARD_ALLDAYS#,
+		SAL_ALLOWANCE_MIDROOM=#SAL_ALLOWANCE_MIDROOM#,
+		SAL_ALLOWANCE_NIGHT=#SAL_ALLOWANCE_NIGHT#,
+		SAL_ALLOWANCE_OTHER=#SAL_ALLOWANCE_OTHER#,
+		SAL_PERFORMANCE=#SAL_PERFORMANCE#,
+		SAL_SUBSIDY=#SAL_SUBSIDY#,
+		SAL_ALLOWANCE=#SAL_ALLOWANCE#,
+		SAL_ALLOWANCE_OUT=#SAL_ALLOWANCE_OUT#,
+		SAL_ALLOWANCE_AIR=#SAL_ALLOWANCE_AIR#,
+		SAL_ALLOWANCE_ALL=#SAL_ALLOWANCE_ALL#,
+		SAL_ALLOWANCE_YEAR=#SAL_ALLOWANCE_YEAR#,
+		SAL_ALLOWANCE_RECORD=#SAL_ALLOWANCE_RECORD#,
+		SAL_ALLOWANCE_RECORD_WHAT=#SAL_ALLOWANCE_RECORD_WHAT#,
+		SAL_DEDUCT_NOWORK=#SAL_DEDUCT_NOWORK#,
+		SAL_DEDUCT_NOWORKDAYS=#SAL_DEDUCT_NOWORKDAYS#,
+		SAL_DEDUCT_RECORD_WHAT=#SAL_DEDUCT_RECORD_WHAT#,
+		SAL_DEDUCT_EAT=#SAL_DEDUCT_EAT#,
+		SAL_DEDUCT_SIGNCARD=#SAL_DEDUCT_SIGNCARD#,
+		SAL_DEDUCT_LEAVE=#SAL_DEDUCT_LEAVE#,
+		SAL_INSURE=#SAL_INSURE#,
+		SAL_FUND_HOUSE=#SAL_FUND_HOUSE#,
+		SAL_FUND_ILL=#SAL_FUND_ILL#,
+		SAL_DEDUCT_BUYCARD=#SAL_DEDUCT_BUYCARD#,
+		SAL_DEDUCT_LATER=#SAL_DEDUCT_LATER#,
+		SAL_TAX=#SAL_TAX#,
+		SAL_REMARKS=#SAL_REMARKS#,
+		SAL_STATE=#SAL_STATE#
+		where SAL_ID=#SAL_ID#
+	</update>
+	<update id="validupdateRecord" parameterClass="com.agileai.domain.DataParam">
+		update hr_salary
+		set
+		SAL_USER=#SAL_USER#,
+		SAL_YEAR=#SAL_YEAR#,
+		SAL_MONTH=#SAL_MONTH#,
+		SAL_TOTAL=#SAL_TOTAL#,
+		SAL_ACTUAL=#SAL_ACTUAL#,
+		SAL_VALID_DAYS=#SAL_VALID_DAYS#,
+		SAL_WORK_DAYS=#SAL_WORK_DAYS#,
+		SAL_BASIC=#SAL_BASIC#,
+		SAL_OVERTIME_NORMAL=#SAL_OVERTIME_NORMAL#,
+		SAL_OVERTIME_WEEKEND=#SAL_OVERTIME_WEEKEND#,
+		SAL_OVERTIME_HOLIDAY=#SAL_OVERTIME_HOLIDAY#,
+		SAL_OVERTIME=#SAL_OVERTIME#,
+		SAL_AWARD_ALLDAYS=#SAL_AWARD_ALLDAYS#,
+		SAL_ALLOWANCE_MIDROOM=#SAL_ALLOWANCE_MIDROOM#,
+		SAL_ALLOWANCE_NIGHT=#SAL_ALLOWANCE_NIGHT#,
+		SAL_ALLOWANCE_OTHER=#SAL_ALLOWANCE_OTHER#,
+		SAL_PERFORMANCE=#SAL_PERFORMANCE#,
+		SAL_SUBSIDY=#SAL_SUBSIDY#,
+		SAL_ALLOWANCE=#SAL_ALLOWANCE#,
+		SAL_ALLOWANCE_OUT=#SAL_ALLOWANCE_OUT#,
+		SAL_ALLOWANCE_AIR=#SAL_ALLOWANCE_AIR#,
+		SAL_ALLOWANCE_ALL=#SAL_ALLOWANCE_ALL#,
+		SAL_ALLOWANCE_YEAR=#SAL_ALLOWANCE_YEAR#,
+		SAL_ALLOWANCE_RECORD=#SAL_ALLOWANCE_RECORD#,
+		SAL_ALLOWANCE_RECORD_WHAT=#SAL_ALLOWANCE_RECORD_WHAT#,
+		SAL_DEDUCT_NOWORK=#SAL_DEDUCT_NOWORK#,
+		SAL_DEDUCT_NOWORKDAYS=#SAL_DEDUCT_NOWORKDAYS#,
+		SAL_DEDUCT_RECORD_WHAT=#SAL_DEDUCT_RECORD_WHAT#,
+		SAL_DEDUCT_EAT=#SAL_DEDUCT_EAT#,
+		SAL_DEDUCT_SIGNCARD=#SAL_DEDUCT_SIGNCARD#,
+		SAL_DEDUCT_LEAVE=#SAL_DEDUCT_LEAVE#,
+		SAL_INSURE=#SAL_INSURE#,
+		SAL_FUND_HOUSE=#SAL_FUND_HOUSE#,
+		SAL_FUND_ILL=#SAL_FUND_ILL#,
+		SAL_DEDUCT_BUYCARD=#SAL_DEDUCT_BUYCARD#,
+		SAL_DEDUCT_LATER=#SAL_DEDUCT_LATER#,
+		SAL_TAX=#SAL_TAX#,
+		SAL_STATE=#SAL_STATE#,
+		SAL_REMARKS=#SAL_REMARKS#
+		where SAL_YEAR=#SAL_YEAR:VARCHAR# and SAL_MONTH=#SAL_MONTH:VARCHAR#
+		and
+		SAL_USER=#SAL_USER:VARCHAR#
+	</update>
+	<update id="approveRecord" parameterClass="com.agileai.domain.DataParam">
+		update hr_salary
+		set
+		SAL_USER=#SAL_USER#,
+		SAL_YEAR=#SAL_YEAR#,
+		SAL_MONTH=#SAL_MONTH#,
+		SAL_TOTAL=#SAL_TOTAL#,
+		SAL_ACTUAL=#SAL_ACTUAL#,
+		SAL_VALID_DAYS=#SAL_VALID_DAYS#,
+		SAL_WORK_DAYS=#SAL_WORK_DAYS#,
+		SAL_BASIC=#SAL_BASIC#,
+		SAL_OVERTIME_NORMAL=#SAL_OVERTIME_NORMAL#,
+		SAL_OVERTIME_WEEKEND=#SAL_OVERTIME_WEEKEND#,
+		SAL_OVERTIME_HOLIDAY=#SAL_OVERTIME_HOLIDAY#,
+		SAL_OVERTIME=#SAL_OVERTIME#,
+		SAL_AWARD_ALLDAYS=#SAL_AWARD_ALLDAYS#,
+		SAL_ALLOWANCE_MIDROOM=#SAL_ALLOWANCE_MIDROOM#,
+		SAL_ALLOWANCE_NIGHT=#SAL_ALLOWANCE_NIGHT#,
+		SAL_ALLOWANCE_OTHER=#SAL_ALLOWANCE_OTHER#,
+		SAL_PERFORMANCE=#SAL_PERFORMANCE#,
+		SAL_SUBSIDY=#SAL_SUBSIDY#,
+		SAL_ALLOWANCE=#SAL_ALLOWANCE#,
+		SAL_ALLOWANCE_OUT=#SAL_ALLOWANCE_OUT#,
+		SAL_ALLOWANCE_AIR=#SAL_ALLOWANCE_AIR#,
+		SAL_ALLOWANCE_ALL=#SAL_ALLOWANCE_ALL#,
+		SAL_ALLOWANCE_YEAR=#SAL_ALLOWANCE_YEAR#,
+		SAL_ALLOWANCE_RECORD=#SAL_ALLOWANCE_RECORD#,
+		SAL_ALLOWANCE_RECORD_WHAT=#SAL_ALLOWANCE_RECORD_WHAT#,
+		SAL_DEDUCT_NOWORK=#SAL_DEDUCT_NOWORK#,
+		SAL_DEDUCT_NOWORKDAYS=#SAL_DEDUCT_NOWORKDAYS#,
+		SAL_DEDUCT_RECORD_WHAT=#SAL_DEDUCT_RECORD_WHAT#,
+		SAL_DEDUCT_EAT=#SAL_DEDUCT_EAT#,
+		SAL_DEDUCT_SIGNCARD=#SAL_DEDUCT_SIGNCARD#,
+		SAL_DEDUCT_LEAVE=#SAL_DEDUCT_LEAVE#,
+		SAL_INSURE=#SAL_INSURE#,
+		SAL_FUND_HOUSE=#SAL_FUND_HOUSE#,
+		SAL_FUND_ILL=#SAL_FUND_ILL#,
+		SAL_DEDUCT_BUYCARD=#SAL_DEDUCT_BUYCARD#,
+		SAL_DEDUCT_LATER=#SAL_DEDUCT_LATER#,
+		SAL_TAX=#SAL_TAX#,
+		SAL_STATE=#SAL_STATE#,
+		SAL_REMARKS=#SAL_REMARKS#
+		where SAL_ID=#SAL_ID#
+	</update>
+	<update id="revokeApprovalRecord" parameterClass="com.agileai.domain.DataParam">
+		update
+		hr_salary
+		set SAL_STATE=#SAL_STATE:VARCHAR#
+		where SAL_ID=#SAL_ID#
+	</update>
+	<delete id="deleteRecord" parameterClass="com.agileai.domain.DataParam">
+		delete from hr_salary
+		where SAL_ID=#SAL_ID#
+	</delete>
+	<insert id="insertValidDaysRecord" parameterClass="com.agileai.domain.DataParam">
+		insert into
+		hr_valid (VALID_YEAR,VALID_MONTH,VALID_DAYS) values
+		(#VALID_YEAR:VARCHAR#,#VALID_MONTH:VARCHAR#,#VALID_DAYS:DECIMAL#)
+	</insert>
+	<update id="updateValidDaysRecord" parameterClass="com.agileai.domain.DataParam">
+		update
+		hr_valid
+		set
+		VALID_YEAR=#VALID_YEAR:VARCHAR#,VALID_MONTH=#VALID_MONTH:VARCHAR#,VALID_DAYS=#VALID_DAYS:DECIMAL#
+		where VALID_YEAR=#VALID_YEAR# and VALID_MONTH=#VALID_MONTH#
+	</update>
+	<select id="existsDataRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select
+		a.SAL_ID,a.SAL_USER,c.EMP_NAME as
+		SAL_NAME,a.SAL_YEAR,a.SAL_MONTH,
+		a.SAL_TOTAL,a.SAL_ACTUAL,a.SAL_VALID_DAYS,a.SAL_WORK_DAYS,
+		a.SAL_BASIC,a.SAL_OVERTIME_NORMAL,a.SAL_OVERTIME_WEEKEND,a.SAL_OVERTIME_HOLIDAY,
+		a.SAL_OVERTIME,a.SAL_AWARD_ALLDAYS,a.SAL_ALLOWANCE_MIDROOM,a.SAL_ALLOWANCE_NIGHT,
+		a.SAL_ALLOWANCE_OTHER,a.SAL_PERFORMANCE,a.SAL_SUBSIDY,a.SAL_ALLOWANCE,a.SAL_ALLOWANCE_OUT,
+		a.SAL_ALLOWANCE_AIR,a.SAL_ALLOWANCE_ALL,a.SAL_ALLOWANCE_YEAR,a.SAL_ALLOWANCE_RECORD,
+		a.SAL_ALLOWANCE_RECORD_WHAT,a.SAL_DEDUCT_NOWORK,a.SAL_DEDUCT_NOWORKDAYS,a.SAL_DEDUCT_RECORD_WHAT,
+		a.SAL_DEDUCT_EAT,a.SAL_DEDUCT_SIGNCARD,a.SAL_DEDUCT_LEAVE,a.SAL_INSURE,a.SAL_FUND_HOUSE,
+		a.SAL_FUND_ILL,a.SAL_DEDUCT_BUYCARD,a.SAL_DEDUCT_LATER,a.SAL_TAX,SAL_REMARKS,a.SAL_STATE
+		from hr_salary a LEFT JOIN security_user b ON
+		a.SAL_USER=b.USER_ID
+		LEFT
+		JOIN hr_employee c ON b.USER_CODE = c.EMP_CODE
+		where 1=1
+		<isNotEmpty prepend=" " property="year">
+			and SAL_YEAR = #year#
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="month">
+			and SAL_MONTH = #month#
+		</isNotEmpty>
+		order by SAL_YEAR,SAL_MONTH,SAL_USER
+	</select>
+	<select id="workDayRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		SELECT USER_ID,COUNT(ATD_DATE) as WORK_DAYS
+		FROM hr_attendance
+		WHERE
+		1=1
+		<isNotEmpty prepend=" " property="userCode">
+			and USER_ID = #userCode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="yearMonth">
+			and LEFT(ATD_DATE,7) =
+			#yearMonth#
+		</isNotEmpty>
+		GROUP BY USER_ID
+	</select>
+	<select id="leaveDayRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		SELECT USER_ID,SUM(LEA_DAYS) as LEAVE_DAYS
+		FROM hr_leave
+		WHERE 1=1
+		and LEA_TYPE != 2 and STATE != 'drafe'
+		<isNotEmpty prepend=" " property="userCode">
+			and USER_ID = #userCode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="yearMonth">
+			and LEFT(LEA_SDATE,7) =
+			#yearMonth#
+		</isNotEmpty>
+		GROUP BY USER_ID
+	</select>
+	<select id="overTimeDayRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		SELECT USER_ID,SUM(WOT_CALC_HOURS) as WOT_DAYS
+		FROM hr_work_overtime
+		WHERE
+		1=1
+		<isNotEmpty prepend=" " property="userCode">
+			and USER_ID = #userCode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="yearMonth">
+			and LEFT(WOT_OVERTIME_DATE,7) =
+			#yearMonth#
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="dayType">
+			and WOT_DAYTYPE=
+			#dayType#
+		</isNotEmpty>
+		GROUP BY USER_ID
+	</select>
+	<update id="updateBonusRecord" parameterClass="com.agileai.domain.DataParam">
+		update
+		hr_salary
+		set SAL_TOTAL=#SAL_TOTAL:DECIMAL#
+		where
+		SAL_ID=#SAL_ID#
+	</update>
+	<select id="findSalaryList" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select
+		SAL_ID,SAL_YEAR,SAL_MONTH,SAL_BASIC,SAL_PERFORMANCE,SAL_SUBSIDY,SAL_INSURE,SAL_REMARKS
+		from hr_salary a left join security_user b on a.SAL_USER = b.USER_ID
+		where 1=1
+		and a.SAL_USER = #userId#
+		order by SAL_YEAR desc,SAL_MONTH
+		desc
+		limit 6
+	</select>
+	<select id="getLastSalayInfo" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select CONCAT(SAL_YEAR,'-',SAL_MONTH) as SAL_YEAR_MONTH,
+		SAL_BASIC,SAL_PERFORMANCE,SAL_SUBSIDY,SAL_INSURE,SAL_TOTAL,SAL_TAX
+		from hr_salary
+		where 1=1
+		and SAL_USER = #userId#
+		order by SAL_YEAR desc
+		,SAL_MONTH desc
+		limit 1
+	</select>
+</sqlMap>

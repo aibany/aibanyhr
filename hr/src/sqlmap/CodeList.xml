@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="codelist">  
+  <select id="findRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+    select a.TYPE_ID ,a.CODE_ID ,a.CODE_NAME ,
+    a.CODE_DESC ,a.CODE_SORT ,a.CODE_FLAG,b.IS_EDITABLE 
+    from sys_codelist a,sys_codetype b
+    where a.TYPE_ID=b.TYPE_ID
+    <isNotEmpty prepend="AND" property="TYPE_GROUP">
+	b.TYPE_GROUP = #TYPE_GROUP#
+	</isNotEmpty>       
+    <isNotEmpty prepend="AND" property="TYPE_ID">
+	a.TYPE_ID = #TYPE_ID#
+	</isNotEmpty>
+	<isEqual prepend="AND" property="manageType" compareValue="normal">
+	b.IS_UNITEADMIN = 'Y'
+	</isEqual>	    
+    order by a.TYPE_ID,a.CODE_SORT
+  </select>
+  <select id="getRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select TYPE_ID ,CODE_ID ,CODE_NAME ,
+    CODE_DESC ,CODE_SORT ,CODE_FLAG 
+	FROM sys_codelist
+	where TYPE_ID = #CODE_TYPE_ID# and CODE_ID=#CODE_ID#
+  </select>
+  <insert id="insertRecord" parameterClass="com.agileai.domain.DataParam">
+    insert into sys_codelist (TYPE_ID, CODE_ID, CODE_NAME, CODE_DESC, CODE_SORT, CODE_FLAG) values (#CODE_TYPE_ID#, #CODE_ID#, #CODE_NAME#, #CODE_DESC#,#CODE_SORT#,#CODE_FLAG#)
+  </insert>
+  <update id="updateRecord" parameterClass="com.agileai.domain.DataParam">
+    update sys_codelist set CODE_NAME = #CODE_NAME#,
+      CODE_DESC = #CODE_DESC#,
+      CODE_SORT = #CODE_SORT#,
+      CODE_FLAG = #CODE_FLAG#
+    where TYPE_ID = #CODE_TYPE_ID# and CODE_ID = #CODE_ID#
+  </update>
+  <delete id="deleteRecord" parameterClass="com.agileai.domain.DataParam">
+    delete from sys_codelist where TYPE_ID = #CODE_TYPE_ID# and CODE_ID = #CODE_ID#
+  </delete>
+</sqlMap>

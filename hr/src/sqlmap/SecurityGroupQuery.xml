@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SecurityGroupQuery"> 
+  <select id="queryRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">SELECT gp.GRP_ID, gp.GRP_CODE, gp.GRP_NAME, gp.GRP_PID, gp.GRP_DESC, gp.GRP_STATE, gp.GRP_SORT, role.ROLE_CODE, role.ROLE_NAME, role.ROLE_PID, role.ROLE_DESC, role.ROLE_STATE, role.ROLE_SORT, role.ROLE_ID FROM security_group gp Inner Join security_role_group_rel rel ON gp.GRP_ID = rel.GRP_ID INNER join security_role role ON rel.ROLE_ID = role.ROLE_ID where 1=1 and role.ROLE_ID = #roleId# order by gp.GRP_CODE,gp.GRP_NAME</select>
+  <select id="findDetail" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">SELECT gp.GRP_ID, gp.GRP_CODE, gp.GRP_NAME, gp.GRP_PID, gp.GRP_DESC, gp.GRP_STATE, gp.GRP_SORT, role.ROLE_CODE, role.ROLE_NAME, role.ROLE_PID, role.ROLE_DESC, role.ROLE_STATE, role.ROLE_SORT, role.ROLE_ID FROM security_group gp Inner Join security_role_group_rel rel ON gp.GRP_ID = rel.GRP_ID INNER join security_role role ON rel.ROLE_ID = role.ROLE_ID where 1=1 and role.ROLE_ID = #roleId# and GP.GRP_ID=#GRP_ID# and ROLE.ROLE_ID=#ROLE_ID#</select>
+  <insert id="addGroupTreeRelation" parameterClass="com.agileai.domain.DataParam">
+    insert into security_role_group_rel (ROLE_ID,GRP_ID) values (#roleId#,#groupId#)
+  </insert>
+  <delete id="delGroupTreeRelation" parameterClass="com.agileai.domain.DataParam">
+    delete from security_role_group_rel where ROLE_ID = #roleId# and GRP_ID = #groupId#
+  </delete>    
+</sqlMap>

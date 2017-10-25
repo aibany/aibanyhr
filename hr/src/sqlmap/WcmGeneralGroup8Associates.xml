@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="WcmGeneralGroup8Associates">  
+  <select id="queryTreeRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select GRP_ID,GRP_NAME,GRP_PID,GRP_ORDERNO,GRP_DESC,GRP_RES_TYPE_DESC,GRP_RES_TYPE_EXTS,GRP_IS_SYSTEM,GRP_RES_SIZE_LIMIT
+from wcm_general_group order by GRP_PID,GRP_ORDERNO
+  </select>
+  <select id="queryPickTreeRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select GRP_ID,GRP_NAME,GRP_PID,GRP_ORDERNO,GRP_DESC,GRP_RES_TYPE_DESC,GRP_RES_TYPE_EXTS,GRP_IS_SYSTEM,GRP_RES_SIZE_LIMIT
+from wcm_general_group order by GRP_PID,GRP_ORDERNO
+  </select>
+  <select id="queryTreeRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select GRP_ID,GRP_NAME,GRP_PID,GRP_ORDERNO,GRP_DESC,GRP_RES_TYPE_DESC,GRP_RES_TYPE_EXTS,GRP_IS_SYSTEM,GRP_RES_SIZE_LIMIT
+from wcm_general_group
+where 1=1 
+<isNotEmpty prepend="and " property="GRP_ID">
+GRP_ID=#GRP_ID#
+</isNotEmpty>
+  </select> 
+  <insert id="insertTreeRecord" parameterClass="com.agileai.domain.DataParam">
+    insert into wcm_general_group (GRP_ID,GRP_NAME,GRP_PID,GRP_ORDERNO,GRP_DESC,GRP_RES_TYPE_DESC,GRP_RES_TYPE_EXTS,GRP_IS_SYSTEM,GRP_RES_SIZE_LIMIT)
+     values (#GRP_ID#,#GRP_NAME#,#GRP_PID#,#GRP_ORDERNO#,#GRP_DESC#,#GRP_RES_TYPE_DESC#,#GRP_RES_TYPE_EXTS#,#GRP_IS_SYSTEM#,#GRP_RES_SIZE_LIMIT#)
+  </insert>  
+  <update id="updateTreeRecord" parameterClass="com.agileai.domain.DataParam">
+	update wcm_general_group
+set GRP_NAME=#GRP_NAME#,GRP_PID=#GRP_PID#,GRP_ORDERNO=#GRP_ORDERNO#,GRP_DESC=#GRP_DESC#,
+GRP_RES_TYPE_DESC=#GRP_RES_TYPE_DESC#,GRP_RES_TYPE_EXTS=#GRP_RES_TYPE_EXTS#,GRP_IS_SYSTEM=#GRP_IS_SYSTEM#,GRP_RES_SIZE_LIMIT=#GRP_RES_SIZE_LIMIT#
+where GRP_ID=#GRP_ID#
+  </update>
+  <delete id="deleteTreeRecord" parameterClass="String">
+    delete from wcm_general_group where GRP_ID = #value#
+  </delete> 
+  <select id="queryChildTreeRecords" parameterClass="String" resultClass="com.agileai.domain.DataRow">
+    select GRP_ID,GRP_NAME,GRP_PID,GRP_ORDERNO,GRP_DESC,GRP_RES_TYPE_DESC,GRP_RES_TYPE_EXTS,GRP_IS_SYSTEM,GRP_RES_SIZE_LIMIT
+from wcm_general_group where GRP_PID = #value# order by GRP_ORDERNO
+  </select>
+  <select id="queryMaxSortId" parameterClass="String" resultClass="com.agileai.domain.DataRow">
+	select max(GRP_ORDERNO) as MAX_GRP_ORDERNO from wcm_general_group where GRP_PID = #value#
+  </select>
+  <select id="queryCurLevelRecords" parameterClass="String" resultClass="com.agileai.domain.DataRow">
+	select b.GRP_ID,b.GRP_NAME,b.GRP_PID,b.GRP_ORDERNO,b.GRP_DESC,b.GRP_RES_TYPE_DESC,b.GRP_RES_TYPE_EXTS,b.GRP_IS_SYSTEM,b.GRP_RES_SIZE_LIMIT
+from wcm_general_group a left join wcm_general_group b 
+on a.GRP_PID=b.GRP_PID
+where a.GRP_ID=#value#
+order by b.GRP_ORDERNO
+  </select>  
+  <select id="findWcmGeneralResourceRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select RES_ID,GRP_ID,RES_NAME,RES_LOCATION,RES_SIZE,RES_SUFFIX,RES_DESCRIPTION,RES_SHAREABLE
+from wcm_general_resource
+where 1=1
+<isNotEmpty prepend=" " property="columnId">
+and GRP_ID=#columnId#
+</isNotEmpty>
+<isNotEmpty prepend=" " property="resName">
+and RES_NAME like '%$resName$%'
+</isNotEmpty>
+<isNotEmpty prepend=" " property="suffix">
+and RES_SUFFIX like '%$suffix$%'
+</isNotEmpty>
+  </select>
+  <select id="getWcmGeneralResourceRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select RES_ID,GRP_ID,RES_NAME,RES_LOCATION,RES_SIZE,RES_SUFFIX,RES_DESCRIPTION,RES_SHAREABLE
+from wcm_general_resource
+where 1=1 
+<isNotEmpty prepend="and " property="RES_ID">
+RES_ID=#RES_ID#
+</isNotEmpty>
+  </select>
+  <insert id="insertWcmGeneralResourceRecord" parameterClass="com.agileai.domain.DataParam">
+	insert into wcm_general_resource (RES_ID,GRP_ID,RES_NAME,RES_LOCATION,RES_SIZE,RES_SUFFIX,RES_DESCRIPTION,RES_SHAREABLE) values (#RES_ID#,#GRP_ID#,#RES_NAME#,#RES_LOCATION#,#RES_SIZE#,#RES_SUFFIX#,#RES_DESCRIPTION#,#RES_SHAREABLE#)
+  </insert>
+  <update id="updateWcmGeneralResourceRecord" parameterClass="com.agileai.domain.DataParam">
+    update wcm_general_resource
+set GRP_ID=#GRP_ID#,RES_NAME=#RES_NAME#,RES_LOCATION=#RES_LOCATION#,RES_SIZE=#RES_SIZE#,RES_SUFFIX=#RES_SUFFIX#,RES_DESCRIPTION=#RES_DESCRIPTION#,RES_SHAREABLE=#RES_SHAREABLE#
+where RES_ID=#RES_ID#
+  </update>
+  <delete id="deleteWcmGeneralResourceRecord" parameterClass="com.agileai.domain.DataParam">
+    delete from wcm_general_resource where RES_ID=#RES_ID#
+  </delete>
+</sqlMap>

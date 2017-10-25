@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="HrWorkOvertime">  
+  <select id="findRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+select a.WOT_ID,a.USER_ID,b.USER_NAME as USER_ID_NAME, b.USER_CODE as USER_ID_CODE,a.WOT_DATE,a.WOT_PARTICIPANT,a.WOT_PLACE,a.WOT_DESC,
+a.WOT_DAYTYPE,a.WOT_CALC_HOURS,
+concat(a.WOT_TIME,d.CODE_NAME) as WOT_TIME,a.WOT_APPROVER,
+c.USER_NAME as WOT_APPROVER_NAME, a.WOT_APP_TIME,a.APP_RESULT,a.WOT_APP_OPINION,a.WOT_OVERTIME_DATE,a.STATE
+from hr_work_overtime a join security_user b on a.USER_ID = b.USER_ID 
+left join security_user c on a.WOT_APPROVER=c.USER_ID
+left join sys_codelist d on a.WOT_TIME_COMPANY = d.CODE_ID
+where 1=1
+and d.TYPE_ID = 'WOT_TIME_COMPANY'
+<isNotEmpty prepend=" " property="sdate">
+and WOT_DATE &gt;= #sdate#
+</isNotEmpty>
+<isNotEmpty prepend=" " property="edate">
+and WOT_DATE &lt;= #edate#
+</isNotEmpty>
+<isNotEmpty prepend=" " property="currentUserId">
+and b.USER_ID = #currentUserId#
+</isNotEmpty>
+<isNotEmpty prepend=" " property="userName_like">
+and b.USER_NAME like #userName_like# or b.USER_CODE like #userName_like#
+</isNotEmpty>
+<isNotEmpty prepend=" " property="STATE">
+and STATE = #STATE#
+</isNotEmpty>
+order by WOT_OVERTIME_DATE desc,b.USER_CODE
+  </select>
+  
+  <select id="getRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+   select a.WOT_ID,a.USER_ID,b.USER_NAME as USER_ID_NAME, a.WOT_DAYTYPE as WOT_DAYTYPE, a.WOT_CALC_HOURS,a.WOT_DATE,a.WOT_PARTICIPANT,
+   a.WOT_PLACE,a.WOT_DESC,a.WOT_TIME,WOT_TIME_COMPANY,a.WOT_APPROVER,c.USER_NAME as WOT_APPROVER_NAME,
+   a.WOT_APP_TIME,a.APP_RESULT,a.WOT_APP_OPINION,a.WOT_OVERTIME_DATE,a.STATE
+from hr_work_overtime a join security_user b on a.USER_ID = b.USER_ID left join security_user c on a.WOT_APPROVER=c.USER_ID 
+ where 1=1 
+<isNotEmpty prepend="and " property="currentDate">
+WOT_DATE=#currentDate#
+</isNotEmpty>
+<isNotEmpty prepend="and " property="WOT_ID">
+WOT_ID=#WOT_ID#
+</isNotEmpty>
+  </select>
+  <select id="getNowRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+   select a.WOT_ID,a.USER_ID,b.USER_NAME as USER_ID_NAME, a.WOT_DAYTYPE as WOT_DAYTYPE,a.WOT_CALC_HOURS,a.WOT_DATE,a.WOT_PARTICIPANT,
+   a.WOT_PLACE,a.WOT_DESC,a.WOT_TIME,WOT_TIME_COMPANY,a.WOT_APPROVER,c.USER_NAME as WOT_APPROVER_NAME,
+   a.WOT_APP_TIME,a.APP_RESULT,a.WOT_APP_OPINION,a.WOT_OVERTIME_DATE,a.STATE
+from hr_work_overtime a join security_user b on a.USER_ID = b.USER_ID left join security_user c on a.WOT_APPROVER=c.USER_ID
+where 1=1 
+<isNotEmpty prepend="and " property="wotDate">
+WOT_DATE=#wotDate#
+</isNotEmpty>
+<isNotEmpty prepend="and " property="currentUserId">
+b.USER_ID=#currentUser#
+</isNotEmpty>
+<isNotEmpty prepend="and " property="WOT_ID">
+WOT_ID=#WOT_ID#
+</isNotEmpty>
+  </select>
+  <insert id="insertRecord" parameterClass="com.agileai.domain.DataParam">
+    insert into hr_work_overtime (WOT_ID,USER_ID,WOT_DATE,WOT_PARTICIPANT,WOT_PLACE,WOT_DESC,WOT_OVERTIME_DATE,WOT_TIME,WOT_TIME_COMPANY,STATE,WOT_DAYTYPE,WOT_CALC_HOURS) 
+    values (#WOT_ID:CHAR#,#USER_ID:CHAR#,#WOT_DATE:DATE#,#WOT_PARTICIPANT:VARCHAR#,
+    		#WOT_PLACE:VARCHAR#,#WOT_DESC:VARCHAR#,#WOT_OVERTIME_DATE:DATE#,#WOT_TIME:VARCHAR#,
+    		#WOT_TIME_COMPANY:VARCHAR#,#STATE:VARCHAR#,#WOT_DAYTYPE:VARCHAR#,#WOT_CALC_HOURS:DECIMAL#)
+  </insert>
+  <update id="updateRecord" parameterClass="com.agileai.domain.DataParam">
+    update hr_work_overtime
+	set USER_ID=#USER_ID:CHAR#,WOT_DATE=#WOT_DATE:VARCHAR#,WOT_PARTICIPANT=#WOT_PARTICIPANT:VARCHAR#,
+	WOT_PLACE=#WOT_PLACE:VARCHAR#,WOT_DESC=#WOT_DESC:VARCHAR#,WOT_OVERTIME_DATE=#WOT_OVERTIME_DATE:DATE#,
+	WOT_TIME=#WOT_TIME:VARCHAR#,WOT_TIME_COMPANY=#WOT_TIME_COMPANY:VARCHAR#,
+	STATE=#STATE:VARCHAR#,WOT_DAYTYPE=#WOT_DAYTYPE:VARCHAR#,WOT_CALC_HOURS=#WOT_CALC_HOURS:DECIMAL# 
+	where WOT_ID=#WOT_ID#
+  </update>
+    <update id="approveRecord" parameterClass="com.agileai.domain.DataParam">
+    update 
+    hr_work_overtime
+	set 
+	WOT_APPROVER=#WOT_APPROVER:CHAR#,
+	WOT_APP_TIME=#WOT_APP_TIME:DATE#,
+	APP_RESULT=#APP_RESULT:VARCHAR#,
+	WOT_APP_OPINION=#WOT_APP_OPINION:VARCHAR#,
+	STATE=#STATE:VARCHAR#
+	where 
+	WOT_ID=#WOT_ID#
+  </update>
+  <delete id="deleteRecord" parameterClass="com.agileai.domain.DataParam">
+    delete from hr_work_overtime where WOT_ID=#WOT_ID#
+  </delete>
+	<select id="findOvertimeList" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		SELECT WOT_ID,WOT_PLACE,WOT_TIME,d.CODE_NAME as WOT_TIME_COMPANY,WOT_OVERTIME_DATE,c.CODE_NAME as STATE,WOT_DAYTYPE,WOT_CALC_HOURS
+		FROM hr_work_overtime a left join security_user b on a.USER_ID = b.USER_ID
+		left join sys_codelist c on a.STATE = c.CODE_ID
+		left join sys_codelist d on a.WOT_TIME_COMPANY = d.CODE_ID
+		WHERE 1 = 1
+		and b.USER_CODE = #userCode#
+		and c.TYPE_ID = 'STATE'
+		and d.TYPE_ID = 'WOT_TIME_COMPANY'
+		order by WOT_OVERTIME_DATE desc
+	</select>
+  <update id="submitRecord" parameterClass="com.agileai.domain.DataParam">
+    update hr_work_overtime
+	set STATE=#STATE:VARCHAR#
+	where WOT_ID=#WOT_ID#
+  </update>	  
+</sqlMap>

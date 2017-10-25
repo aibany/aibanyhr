@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SecurityUserQuery"> 
+  <select id="queryRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+  	SELECT r.ROLE_ID, r.ROLE_CODE, r.ROLE_NAME, r.ROLE_PID, r.ROLE_DESC, r.ROLE_STATE, r.ROLE_SORT, u.USER_ID, u.USER_CODE, u.USER_NAME, u.USER_PWD, u.USER_SEX, u.USER_DESC, u.USER_STATE, u.USER_SORT FROM security_role r Inner Join security_user_role_rel rel ON r.ROLE_ID = rel.ROLE_ID Inner Join security_user u on rel.USER_ID = u.USER_ID where 1=1 and r.ROLE_ID = #roleId# order by u.USER_CODE,u.USER_NAME
+	</select>
+  <select id="findDetail" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+  	SELECT r.ROLE_ID, r.ROLE_CODE, r.ROLE_NAME, r.ROLE_PID, r.ROLE_DESC, r.ROLE_STATE, r.ROLE_SORT, u.USER_ID, u.USER_CODE, u.USER_NAME, u.USER_PWD, u.USER_SEX, u.USER_DESC, u.USER_STATE, u.USER_SORT FROM security_role r Inner Join security_user_role_rel rel ON r.ROLE_ID = rel.ROLE_ID Inner Join security_user u on rel.USER_ID = u.USER_ID where 1=1 and r.ROLE_ID = #roleId# and R.ROLE_ID=#ROLE_ID# and U.USER_ID=#USER_ID#
+  	</select>
+  <insert id="addUserTreeRelation" parameterClass="com.agileai.domain.DataParam">
+    insert into security_user_role_rel (ROLE_ID,USER_ID) values (#roleId#,#userId#)
+  </insert>
+  <delete id="delUserTreeRelation" parameterClass="com.agileai.domain.DataParam">
+    delete from security_user_role_rel where ROLE_ID = #roleId# and USER_ID = #userId#
+  </delete>      
+  <select id="retrieveUserInfo" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+  	SELECT u.USER_ID,u.USER_CODE,u.USER_NAME,u.USER_PWD from security_user u  
+  	where 1=1
+  	<isNotEmpty prepend=" " property="openId">
+  	and u.USER_WX_OPENID=#openId#
+  	</isNotEmpty>
+  	<isNotEmpty prepend=" " property="userCode">
+  	and u.USER_CODE=#userCode#
+  	</isNotEmpty>
+  </select>
+  <update id="updateUserInfo" parameterClass="com.agileai.domain.DataParam">
+    update security_user set USER_WX_OPENID = #openId#
+    where USER_CODE = #userCode#
+  </update>  
+</sqlMap>

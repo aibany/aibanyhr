@@ -1,0 +1,533 @@
+html {
+	height: 100%;
+}
+body {
+	font-size: 12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: black;
+	margin:0px 5px 0px 5px;
+	padding: 0;
+	height:99%;
+}
+#form1{
+	min-height: 100%;	
+}
+
+div,td,span,th {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+}
+#filterBox .content h3{
+	background:url(../images/decorator/bg2.gif) repeat-x;
+	height: 30px;
+	line-height: 30px;
+	color: white;
+	margin: 0px;
+	font-size: 13px;
+	font-weight: bold;	
+}
+.bartd{
+	width: 25px;
+	cursor: hand;
+	text-align:center
+}
+.bartdx{
+	cursor:pointer;
+	text-align:center;
+	color:#333;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:13px;
+	padding:5px 5px;
+	height: 22px;
+	line-height:22px;	
+}
+#rightArea {
+	border: #1860A8 1px solid; 
+	height:340px;
+}
+
+#__ParamBar__{
+	display: block;
+}
+.queryTable {
+  border: 1px solid #99BBE8;
+  font-size: 12px;
+  margin:0px;
+  width:100%;
+  background-color:#F9F9F9;
+  height:35px;
+  padding-left: 5px;
+}
+
+#__ToolBar__{
+	display: block;
+}
+.toolTable {
+	height:35px;
+}
+#_TreeToolBar_ .bartdx{
+	cursor:pointer;
+	text-align:center;
+	color:#333;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:13px;
+	padding:3px 5px;
+	height:21px;
+}
+.bartdx input{
+	margin:0px 4px 0px 0px;
+}
+form {
+	padding:0px;
+	margin:0px;
+	border:0px solid red;
+}
+.boxTable{
+	padding:0px;
+	margin:0px;
+	width:100%;	
+	border:1px #d9d9d9 solid;
+	background-color:#FFF;
+}
+.dataTable {
+	padding:0px;
+	margin:0px;
+	margin-bottom:5px;
+	width:100%;	
+	border-left:1px #d9d9d9 solid;
+	table-layout:auto;
+}
+.dataTable th {
+	background-color:#D9E9Ff;
+	font-weight:bolder;
+	height:23px;
+	text-align:center;
+	margin:0px;
+	padding:0px;
+	border-top:1px #d9d9d9 solid;
+	border-left:1px #ffffff solid;
+	border-right:1px #4482d3 solid;
+	border-bottom:1px #d9d9d9 solid;
+	background-image:url(../images/gird/headerBg.gif);
+	color:#10418c;
+}
+.dataTable td {	
+	color:#000000;
+	border:1px #d9d9d9 solid;
+	border-top:0px;
+	border-left:0px;
+	padding:2px;
+	height:23px;
+	white-space:nowrap;word-break:keep-all;word-wrap:normal;
+	overflow:hidden;	
+}
+.dataTable  .even{
+	background-color:#fff3f0;
+}
+.dataTable  .odd{
+	background-color: #FFFFFF;
+}
+.borderTable {
+	width: 100%;
+	margin: 0px;
+	padding:2px;
+	margin-bottom: 10px;
+	font-size: 12px;
+	border: solid 1px #98C79A;
+}
+.borderTable .xborder{
+	font-weight:bolder;
+	height:23px;
+	color:#036;
+	border:1px #d9d9d9 solid;
+	border-top:0px;
+	border-left:0px;
+	padding: 2px;
+	padding-left:10px;
+	background: #D9E9Ff;
+}
+.detailTable {
+	width: 100%;
+	margin: 0px;
+	padding:0px;
+	margin-bottom: 10px;
+	font-size: 12px;
+	border-left:1px #d9d9d9 solid;
+	border-top:1px #d9d9d9 solid;
+}
+.detailTable th{
+	font-weight:bolder;
+	height:23px;
+	color:#036;
+	border:1px #d9d9d9 solid;
+	border-top:0px;
+	border-left:0px;
+	padding: 1px 1px 1px 10px;
+	background: #D9E9Ff;
+	text-align:left;
+	margin: 0px;
+}
+.detailTable td {
+	color:#000000;
+	border:1px #d9d9d9 solid;
+	border-top:0px;
+	border-left:0px;
+	padding: 1px 1px 1px 1px;
+	margin: 0px;
+}
+
+.detailTable td input{
+	border:1px solid #337799;
+	margin-left:0px;
+	font-family:'Verdana';
+}
+
+.detailTable td textarea{
+	border:1px solid #337799;
+	margin-left:0px;
+	font-size: 13px; 
+}
+.detailTable td select{
+	border:1px solid #337799;
+	margin-left:0px;
+}
+
+a:link {
+	text-decoration: none
+}
+a:visited {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline
+}
+
+input{
+	border:1px solid #337799;
+	margin-left:1px;
+}
+textarea{
+	border:1px solid #337799;
+	margin-left:1px;
+	font-size: 13px; 
+}
+select{
+	border:1px solid #337799;
+	margin-left:1px;
+	vertical-align:middle;
+}
+.formbutton {
+	border: 1px solid #666;
+	background: url(../images/button_bg.gif) repeat-x;
+	font-size: 13px;  
+	height: 20px;
+	line-height:17px;
+	margin:0px auto 2px auto;
+	vertical-align:middle;
+}
+.middlebar {
+	background-color: #006766;
+}
+.newImgBtn{
+	background: url(../images/new.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.newImgBtndisabled{
+	background: url(../images/new0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.addImgBtn{
+	background: url(../images/add.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.addImgBtndisabled{
+	background: url(../images/add0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.createImgBtn{
+	background: url(../images/creat.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.createImgBtndisabled{
+	background: url(../images/creat0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.copyImgBtn{
+	background: url(../images/copy.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.copyImgBtndisabled{
+	background: url(../images/copy0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.editImgBtn{
+	background: url(../images/modify.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.editImgBtndisabled{
+	background: url(../images/modify0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.refreshImgBtn{
+	background: url(../images/refresh.gif) no-repeat center center; width: 15px; height: 15px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+
+.relateImgBtn{
+	background: url(../images/relate.png) no-repeat center center; width: 15px; height: 15px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.relateImgBtndisabled{
+	background: url(../images/relate0.png) no-repeat center center; width: 15px; height: 15px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.detailImgBtn{
+	background: url(../images/detail.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.detailImgBtndisabled{
+	background: url(../images/detail0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.delImgBtn{
+	background: url(../images/delete.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.delImgBtndisabled{
+	background: url(../images/delete0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.cancelImgBtn{
+	background: url(../images/cancel.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.saveImgBtn{
+	background: url(../images/save.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.saveImgBtndisabled{
+	background: url(../images/save0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.backImgBtn{
+	background: url(../images/back.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.closeImgBtn{
+	background: url(../images/close.gif) no-repeat center center; width: 15px; height: 15px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.assignImgBtn{
+	background: url(../images/assign.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+
+.filterImgBtn{
+	background: url(../images/filter.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+
+.resetPasswordImgBtn{
+	background: url(../images/reset.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+
+.removeImgBtn{
+	background: url(../images/remove.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.removeImgBtndisabled{
+	background: url(../images/remove0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+
+.upImgBtn{
+	background: url(../images/up.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.upImgBtndisabled{
+	background: url(../images/up0.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.downImgBtn{
+	background: url(../images/down.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.downImgBtndisabled{
+	background: url(../images/down0.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.moveImgBtn{
+	background: url(../images/move.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.moveImgBtndisabled{
+	background: url(../images/move0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.modifyImgBtn{
+	background: url(../images/modify.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.modifyImgBtndisabled{
+	background: url(../images/modify0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.approveImgBtn{
+	background: url(../images/send.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.approveImgBtndisabled{
+	background: url(../images/send0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.submitImgBtn{
+	background: url(../images/upload.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.submitImgBtndisabled{
+	background: url(../images/upload0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+
+.revokeApproveImgBtn{
+	background: url(../images/previous.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.revokeApproveImgBtndisabled{
+	background: url(../images/previous0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.reSubmittedImgBtn{
+	background: url(../images/download.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.reSubmittedImgBtndisabled{
+	background: url(../images/download0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.excelImgBtn{
+	background: url(../images/excel.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.wordImgBtn{
+	background: url(../images/word.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.pdfImgBtn{
+	background: url(../images/pdf.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.paymentImgBtn{
+	background: url(../images/payment.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.paymentImgBtndisabled{
+	background: url(../images/payment0.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.syncSecurityImgBtn{
+	background: url(../images/ruff.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.syncSecurityImgBtndisabled{
+	background: url(../images/ruff0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.salaryImgBtn{
+	background: url(../images/salary.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.salaryImgBtndisabled{
+	background: url(../images/salary0.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.validdaysImgBtn{
+	background: url(../images/validdays.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.validdaysImgBtndisabled{
+	background: url(../images/validdays0.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+/************************************************************
+Tab begin
+***************************************************************/
+.photobg {
+	BACKGROUND: url(../images/tab/tabDiv36.gif); HEIGHT: 28px; TEXT-ALIGN: left
+}
+.photobg1 {
+	BACKGROUND: url(../images/tab/tabDiv40.gif); HEIGHT: 26px; TEXT-ALIGN: left; WIDTH: 100%; padding-right:2px;
+}
+.phototitle {
+	BACKGROUND: url(../images/tab/tabDiv17.gif); WIDTH: 107px; PADDING-TOP: 10px; HEIGHT: 18px; TEXT-ALIGN: center
+}
+.photobox {
+	BORDER-RIGHT: #1860A8 1px solid; BORDER-LEFT: #1860A8 1px solid; BORDER-BOTTOM: #1860A8 1px solid; margin:0px; height:340px;
+}
+.newarticlebox {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 1px; WIDTH: 100%; PADDING-TOP: 0px; TEXT-ALIGN: left; overflow:auto;height:340px;
+}
+.newarticle1 {
+	FLOAT: left;  PADDING-TOP: 0px; HEIGHT: 18px; TEXT-ALIGN: center
+}
+.newarticle2 {
+	FLOAT: left;  PADDING-TOP: 0px; HEIGHT: 18px; TEXT-ALIGN: center
+}
+/************************************************************
+Tab end
+***************************************************************/

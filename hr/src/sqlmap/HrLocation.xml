@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="HrLocation">  
+  <select id="findRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select LOCAT_ID,USER_NAME,LOCAT_TIME,LOCAT_PLACE
+from hr_location a left join security_user b on a.USER_ID = b.USER_ID
+where 1=1
+<isNotEmpty prepend=" " property="sdate">
+and LOCAT_TIME &gt;= date_format(#sdate#,'%Y-%m-%d 00:00:00')
+</isNotEmpty>
+<isNotEmpty prepend=" " property="edate">
+and LOCAT_TIME &lt;= date_format(#edate#,'%Y-%m-%d 23:59:59')
+</isNotEmpty>
+<isNotEmpty prepend=" " property="userName_like">
+and b.USER_NAME like #userName_like#
+</isNotEmpty>
+order by LOCAT_TIME desc
+  </select>
+  <select id="getRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+    select LOCAT_ID,USER_ID,LOCAT_TIME,LOCAT_PLACE
+from hr_location
+where 1=1 
+<isNotEmpty prepend="and " property="LOCAT_ID">
+LOCAT_ID=#LOCAT_ID#
+</isNotEmpty>
+  </select>
+  <insert id="insertRecord" parameterClass="com.agileai.domain.DataParam">
+    insert into hr_location (LOCAT_ID,USER_ID,LOCAT_TIME,LOCAT_PLACE) values (#LOCAT_ID:CHAR#,#USER_ID:CHAR#,#LOCAT_TIME:TIMESTAMP#,#LOCAT_PLACE:VARCHAR#)
+  </insert>
+  <update id="updateRecord" parameterClass="com.agileai.domain.DataParam">
+    update hr_location
+set USER_ID=#USER_ID:CHAR#,LOCAT_TIME=#LOCAT_TIME:TIMESTAMP#,LOCAT_PLACE=#LOCAT_PLACE:VARCHAR#
+where LOCAT_ID=#LOCAT_ID#
+  </update>
+  <delete id="deleteRecord" parameterClass="com.agileai.domain.DataParam">
+    delete from hr_location where LOCAT_ID=#LOCAT_ID#
+  </delete>
+</sqlMap>

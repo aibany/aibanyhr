@@ -1,0 +1,113 @@
+/* CSS Document */
+
+html,body {
+    margin: 0;
+    padding: 0;
+    color : white;
+    font-size: 12px;
+    font-family: '宋体' arial;
+    height: 100%;
+    background: #157AD1 url("../images/login/body-bg.jpg") repeat-x top left;
+}
+
+#error {
+    display: none;
+    background: url("../images/login/error.gif") no-repeat;
+    padding-left: 20px;
+    height: 24px;
+    color: red;
+    margin-left: 24px;
+}
+
+#top {
+    min-height: 100%;
+    text-align: center;
+}
+
+#bottom {
+    position: relative;
+    margin: 45px auto 0px auto;
+    /*background: url("../images/login/bottom-bg.jpg") repeat-x left -1px;*/
+}
+
+#bottom-content {
+    height: 30px;
+	line-height:30px;
+    text-align: center;  
+    position: relative;
+}
+
+.login{
+	margin-left: 30px;
+}
+
+#login-form p span.tlabel {
+	width: 43px;
+	display: block;
+	float: left;
+	line-height: 30px;
+	height: 30px;
+	font-size: 14px;
+	margin-right: 6px;
+}
+
+
+#main {
+    width: 900px;
+    height: 527px;
+    background: url("../images/login/main-bg.jpg") no-repeat top center;
+    position: relative;
+    margin: 0 auto;
+    padding-bottom: 0px;
+}
+
+
+#login-form {
+    position: absolute;
+    left: 396px;
+    top: 212px;
+    width: 501px;
+    height: 228px;
+    background: url("../images/login/login-form-bg.png") no-repeat;
+}
+
+#login-form-content {
+    position: relative;
+    text-align: left;
+    color: white;
+    padding: 8px 12px;
+}
+
+.login .label {
+    margin-bottom: 2px;
+    margin-top: 20px;
+}
+
+.login input {
+    padding: 6px 6px 6px 28px;
+    margin-bottom: 0px;
+    width: 224px;
+    border: 0;
+}
+
+.login input.required {
+
+}
+
+.login input#userId {
+    background: white url("../images/login/user.png") no-repeat 4px center;
+}
+
+.login input#userPwd {
+    background: white url("../images/login/password.png") no-repeat 4px center;
+}
+
+.login .btn-submit {
+	width: 128px;
+	padding: 6px 6px 6px 10px;
+}
+
+.login .btn-reset {
+	width: 128px;
+	padding: 6px 6px 6px 10px;
+}

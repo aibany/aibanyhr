@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans> 
+  <bean id="HrSalaryManageList" class="com.aibany.hr.module.salary.handler.HrSalaryManageListHandler" page="salary/HrSalaryManageList.jsp"/>  
+  <bean id="HrSalaryManageEdit" class="com.aibany.hr.module.salary.handler.HrSalaryManageEditHandler" page="salary/HrSalaryManageEdit.jsp"/>  
+  <bean id="HrValidDays" class="com.aibany.hr.module.salary.handler.HrValidDaysHandler" page="salary/HrValidDays.jsp"/>
+  <bean id="MobileSalary" class="com.aibany.hr.module.salary.handler.MobileSalaryHandler" page=""/>
+</beans>

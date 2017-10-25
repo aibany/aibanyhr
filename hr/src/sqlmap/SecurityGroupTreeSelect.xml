@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SecurityGroupTreeSelect"> 
+  <select id="queryPickTreeRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">SELECT a.GRP_ID, a.GRP_CODE, a.GRP_NAME, a.GRP_PID, a.GRP_DESC, a.GRP_STATE, a.GRP_SORT FROM security_group a where 1=1 order by a.GRP_PID,a.GRP_SORT</select>
+</sqlMap>

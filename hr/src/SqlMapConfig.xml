@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig> 
+  <settings cacheModelsEnabled="true" enhancementEnabled="true" lazyLoadingEnabled="true" errorTracingEnabled="true" maxRequests="32" maxSessions="10" maxTransactions="5" useStatementNamespaces="true"/>  
+	<sqlMap resource="sqlmap/SysFunction.xml"/>
+	<sqlMap resource="sqlmap/SysHandler.xml"/>
+	<sqlMap resource="sqlmap/Util.xml"/>
+	<sqlMap resource="sqlmap/CodeList.xml"/>
+	<sqlMap resource="sqlmap/CodeType.xml"/>
+  	<sqlMap resource="sqlmap/SysLog.xml"/>
+  	<sqlMap resource="sqlmap/SysOnlineCount.xml"/>  	
+	<sqlMap resource="sqlmap/SecurityAuthorizationConfig.xml"/>
+	<sqlMap resource="sqlmap/SecurityGroup8Associates.xml"/>
+	<sqlMap resource="sqlmap/UserListSelect.xml"/>
+	<sqlMap resource="sqlmap/SecurityUserQuery.xml"/>
+</sqlMapConfig>
