@@ -58,6 +58,7 @@ CREATE DATABASE IF NOT EXISTS aeaihr DEFAULT CHARSET utf8 COLLATE utf8_general_c
 我们将收集大众的需求进行开发和维护，请联系邮箱fucusios@foxmail.com， 有任何问题也可以通过邮箱给我们留言，
 
 我们提供QQ群进行交流：184961703
+代码和项目本身是开源的，但是如果你需要技术指导，我们需要收取300元/h的时间成本。如果有定制需求，按具体工作量进行费用计算。当然我们希望大家自己动手丰衣足食。
 
 ### 五、微信公众号配置说明：
 
@@ -106,5 +107,25 @@ CREATE DATABASE IF NOT EXISTS aeaihr DEFAULT CHARSET utf8 COLLATE utf8_general_c
 
 <img src="readme/hr_07.png"/>
 
+####其他使用截图
+<img src="readme/hr_08.png"/>
+
+<img src="readme/hr_09.png"/>
+
+<img src="readme/hr_10.png"/>
+
+<img src="readme/hr_11.png"/>
+
+<img src="readme/hr_12.png"/>
+
+<img src="readme/hr_13.png"/>
+
+<img src="readme/hr_14.png"/>
+
+<img src="readme/hr_15.png"/>
+
+<img src="readme/hr_16.png"/>
+
+<img src="readme/hr_17.png"/>
 
 

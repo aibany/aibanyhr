@@ -5,6 +5,7 @@
 	class="com.agileai.hotweb.domain.PageBean" />
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 <meta charset="utf-8">
 <title> </title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -67,7 +68,7 @@ th {
 <%}%>
 
 <%if (pageBean.getStringValue("userName") != null) {%>
-	$("title").html("<%=pageBean.getAttribute("userName")%>的考勤记录"); 
+	$(document).attr("title",'<%=pageBean.getAttribute("userName")%>的考勤记录');
 <%}%>
 
 	});
